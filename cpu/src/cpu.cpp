@@ -31,7 +31,7 @@ int CPU::Start() {
 }
 
 int CPU::Update() {
-    if (pc + 1 >= 20)
+    if (pc + 1 >= MAX_STACK)
         return 50;
     unsigned char first_half = stack[pc];
     unsigned char second_half = stack[pc + 1];
@@ -39,6 +39,9 @@ int CPU::Update() {
     op = op << 8;
     op += second_half;
 
+    std::cout << "OP: " <<  std::hex << op << std::endl;
+
+// ------------------------------- JUMP ------------------------------------------------
     if (op >= 0x1000 && op <= 0x1FFF) {
         unsigned short jmp = (op << 4);
         jmp = (jmp >> 4);
@@ -46,12 +49,13 @@ int CPU::Update() {
         //std::cout << "OP: " <<  std::hex << op << std::endl << "PC: " <<  (int)pc << std::endl;
         return Update();
     }
-
+// ------------------------------- CALL ------------------------------------------------
     if (op >= 0x4000 && op <= 0x4FFF) {
+        unsigned short jmp = (op << 4);
+        jmp = (jmp >> 4);
         return NotImplemented(op);
     }
-
-    std::cout << "OP: " <<  std::hex << op << std::endl;
+// ------------------------------- EXIT ------------------------------------------------
     switch (op) {
         case 0x00E0: // Exit
             return 0;

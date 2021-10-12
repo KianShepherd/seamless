@@ -31,11 +31,11 @@ int main(int argc, char** argv) {
     int rc = 0;
     CPU* cpu = new CPU(program_data, program_size);
 
-    
     if (dump_cpu)
         cpu->Dump();
 
     rc = cpu->Start();
+
     if (dump_cpu)
         cpu->Dump();
 
