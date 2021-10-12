@@ -3,6 +3,7 @@
 TARGET = seamless
 CC = g++
 CFLAGS  = -g -Wall -std=c++11
+RM = del
 
 all: main.o cpu.o
 	$(CC) $(CFLAGS) -o $(TARGET) main.o cpu.o
@@ -14,4 +15,4 @@ main.o: main.cpp src/cpu.cpp include/cpu.h
 	$(CC) $(CFLAGS) -c main.cpp
 
 clean: 
-	$(RM) count *.o *~
+	$(RM) *.o seamless.exe
