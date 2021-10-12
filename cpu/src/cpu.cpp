@@ -1003,7 +1003,8 @@ int CPU::Update() {
             break;
         case 0xA330:
             break;
-
+        default:
+            return NotImplemented(op);
     }
 
     pc += 2;
