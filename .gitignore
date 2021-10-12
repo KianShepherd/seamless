@@ -1,0 +1,6 @@
+seamless*
+*.o
+.vscode
+.vscode/*
+.idea
+.idea/*
