@@ -39,9 +39,11 @@ int CPU::Update() {
     unsigned short op = first_half;
     op = op << 8;
     op += second_half;
-
+    int first = (op & 0b1111000000000000);
+    first = (first >> 12);
+    temp_int = 0;
     std::cout << "OP: " <<  std::hex << op << std::endl;
-
+    std::cout << "FIRST: " << std::hex << first << std::endl;
 // ------------------------------- JUMP ------------------------------------------------
     if (op >= 0x1000 && op <= 0x1FFF) {
         unsigned short jmp = (op << 4);
@@ -73,128 +75,128 @@ int CPU::Update() {
             break;
 // ------------------------------- JUMPS ------------------------------------------------
         case 0x2100:
-            pc = (int)registers[pc + 2];
+            pc = (int)stack[pc + 2];
             break;
         case 0x2101:
             if (registers[0] == registers[1]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2102:
             if (registers[0] == registers[2]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2103:
             if (registers[0] == registers[3]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2110:
             if (registers[1] == registers[0]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2111:
-            pc = (int)registers[pc + 2];
+            pc = (int)stack[pc + 2];
             break;
         case 0x2112:
             if (registers[1] == registers[2]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2113:
             if (registers[1] == registers[3]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2120:
             if (registers[2] == registers[0]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2121:
             if (registers[2] == registers[1]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2122:
-            pc = (int)registers[pc + 2];
+            pc = (int)stack[pc + 2];
             break;
         case 0x2123:
             if (registers[2] == registers[3]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2130:
             if (registers[3] == registers[0]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2131:
             if (registers[3] == registers[1]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2132:
             if (registers[3] == registers[2]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2133:
-            pc = (int)registers[pc + 2];
+            pc = (int)stack[pc + 2];
             break;
         case 0x2200:
             pc++;
             break;
         case 0x2201:
             if (registers[0] != registers[1]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2202:
             if (registers[0] != registers[2]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2203:
             if (registers[0] != registers[3]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2210:
             if (registers[1] != registers[0]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
@@ -204,28 +206,28 @@ int CPU::Update() {
             break;
         case 0x2212:
             if (registers[1] != registers[2]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2213:
             if (registers[1] != registers[3]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2220:
             if (registers[2] != registers[0]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2221:
             if (registers[2] != registers[1]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
@@ -235,28 +237,28 @@ int CPU::Update() {
             break;
         case 0x2223:
             if (registers[2] != registers[3]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2230:
             if (registers[3] != registers[0]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2231:
             if (registers[3] != registers[1]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2232:
             if (registers[3] != registers[2]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
@@ -267,28 +269,28 @@ int CPU::Update() {
             break;
         case 0x2301:
             if (registers[0] > registers[1]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2302:
             if (registers[0] > registers[2]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2303:
             if (registers[0] > registers[3]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2310:
             if (registers[1] > registers[0]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
@@ -298,28 +300,28 @@ int CPU::Update() {
             break;
         case 0x2312:
             if (registers[1] > registers[2]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2313:
             if (registers[1] > registers[3]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2320:
             if (registers[2] > registers[0]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2321:
             if (registers[2] > registers[1]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
@@ -329,28 +331,28 @@ int CPU::Update() {
             break;
         case 0x2323:
             if (registers[2] > registers[3]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2330:
             if (registers[3] > registers[0]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2331:
             if (registers[3] > registers[1]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2332:
             if (registers[3] > registers[2]) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
@@ -360,43 +362,43 @@ int CPU::Update() {
             break;
         case 0x2400:
             if (registers[0] == 0) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2401:
             if (registers[1] == 0) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2402:
             if (registers[2] == 0) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2403:
             if (registers[3] == 0) {
-                pc = (int)registers[pc + 2];
+                pc = (int)stack[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x3000:
-            std::cout << (int)registers[0] << std::endl;
+            std::cout << (int)stack[0] << std::endl;
             break;
         case 0x3001:
-            std::cout << (int)registers[1] << std::endl;
+            std::cout << (int)stack[1] << std::endl;
             break;
         case 0x3002:
-            std::cout << (int)registers[2] << std::endl;
+            std::cout << (int)stack[2] << std::endl;
             break;
         case 0x3003:
-            std::cout << (int)registers[3] << std::endl;
+            std::cout << (int)stack[3] << std::endl;
             break;
 // ------------------------------- SET REGISTER ------------------------------------------------
 // ------------------------------- SET u8 ------------------------------------------------
