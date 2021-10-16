@@ -1275,8 +1275,9 @@ int CPU::Update() {
     op += second_half;
     int first = (op & 0b1111000000000000);
     first = (first >> 12);
-    std::cout << "OP: " <<  std::hex << op << std::endl;
-    std::cout << "FIRST: " << std::hex << first << std::endl;
+
+    //std::cout << "OP: " <<  std::hex << op << std::endl;
+    //std::cout << "FIRST: " << std::hex << first << std::endl;
 
     switch (first) {
         case 0:

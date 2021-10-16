@@ -19,12 +19,12 @@ int main(int argc, char** argv) {
     program_data[3] = 0x00;
     program_data[4] = 0x50;
     program_data[5] = 0x00;
-    program_data[6] = 0x10;
+    program_data[6] = 0x48;
     program_data[7] = 0x51;
     program_data[8] = 0x00;
     program_data[9] = 0x0a;
     program_data[10] = 0x30;
-    program_data[11] = 0x00;
+    program_data[11] = 0x10;
     program_data[12] = 0x00;
     program_data[13] = 0xE0;
 
