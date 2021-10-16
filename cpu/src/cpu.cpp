@@ -27,40 +27,8 @@ int NotImplemented(short op) {
 int CPU::Start() {
     return Update();
 }
-
-int CPU::Update() {
-    if (pc + 1 >= MAX_STACK)
-        return 50;
-    long long temp_long = 0;
-    int temp_int = 0;
-    short temp_short = 0;
-    unsigned char first_half = stack[pc];
-    unsigned char second_half = stack[pc + 1];
-    unsigned short op = first_half;
-    op = op << 8;
-    op += second_half;
-    int first = (op & 0b1111000000000000);
-    first = (first >> 12);
-    temp_int = 0;
-    std::cout << "OP: " <<  std::hex << op << std::endl;
-    std::cout << "FIRST: " << std::hex << first << std::endl;
-// ------------------------------- JUMP ------------------------------------------------
-    if (op >= 0x1000 && op <= 0x1FFF) {
-        unsigned short jmp = (op << 4);
-        jmp = (jmp >> 4);
-        pc = jmp;
-        //std::cout << "OP: " <<  std::hex << op << std::endl << "PC: " <<  (int)pc << std::endl;
-        return Update();
-    }
-// ------------------------------- CALL ------------------------------------------------
-    if (op >= 0x4000 && op <= 0x4FFF) {
-        unsigned short jmp = (op << 4);
-        jmp = (jmp >> 4);
-        pc_stack.push(pc);
-        pc = jmp;
-        return Update();
-    }
-
+// Exit, Return
+int CPU::Ops0000(unsigned short op) {
     switch (op) {
 // ------------------------------- EXIT ------------------------------------------------
         case 0x00E0:
@@ -72,8 +40,25 @@ int CPU::Update() {
             }
             pc = pc_stack.top();
             pc_stack.pop();
-            break;
-// ------------------------------- JUMPS ------------------------------------------------
+            return Update();
+        default:
+            return NotImplemented((short)op);
+    }
+}
+
+// Jump NNN
+int CPU::Ops1000(unsigned short op) {
+    unsigned short jmp = (op << 4);
+    jmp = (jmp >> 4);
+    pc = jmp;
+    //std::cout << "OP: " <<  std::hex << op << std::endl << "PC: " <<  (int)pc << std::endl;
+    return Update();
+}
+
+// Jumps
+int CPU::Ops2000(unsigned short op) {
+    switch (op) {
+        // ------------------------------- JUMPS ------------------------------------------------
         case 0x2100:
             pc = (int)stack[pc + 2];
             break;
@@ -387,21 +372,79 @@ int CPU::Update() {
             } else {
                 pc++;
             }
-            break;
+            return Update();
+        default:
+            return NotImplemented((short)op);
+    }
+    return Update();
+}
+
+// Prints
+int CPU::Ops3000(unsigned short op) {
+    pc += 2;
+    switch (op) {
+    // print int
         case 0x3000:
-            std::cout << (int)stack[0] << std::endl;
-            break;
+            std::cout << (int)registers[0] << std::endl;
+            return Update();
         case 0x3001:
-            std::cout << (int)stack[1] << std::endl;
-            break;
+            std::cout << (int)registers[1] << std::endl;
+            return Update();
         case 0x3002:
-            std::cout << (int)stack[2] << std::endl;
-            break;
+            std::cout << (int)registers[2] << std::endl;
+            return Update();
         case 0x3003:
-            std::cout << (int)stack[3] << std::endl;
-            break;
-// ------------------------------- SET REGISTER ------------------------------------------------
-// ------------------------------- SET u8 ------------------------------------------------
+            std::cout << (int)registers[3] << std::endl;
+            return Update();
+    // print char
+        case 0x3010:
+            std::cout << (char)registers[0] << std::endl;
+            return Update();
+        case 0x3011:
+            std::cout << (char)registers[1] << std::endl;
+            return Update();
+        case 0x3012:
+            std::cout << (char)registers[2] << std::endl;
+            return Update();
+        case 0x3013:
+            std::cout << (char)registers[3] << std::endl;
+            return Update();
+// print float
+        case 0x3020:
+            std::cout << (double)registers[0] << std::endl;
+            return Update();
+        case 0x3021:
+            std::cout << (double)registers[1] << std::endl;
+            return Update();
+        case 0x3022:
+            std::cout << (double)registers[2] << std::endl;
+            return Update();
+        case 0x3023:
+            std::cout << (double)registers[3] << std::endl;
+            return Update();
+        default:
+            return NotImplemented((short)op);
+    }
+}
+
+// Call NNN
+int CPU::Ops4000(unsigned short op) {
+// ------------------------------- CALL ------------------------------------------------
+    unsigned short jmp = (op << 4);
+    jmp = (jmp >> 4);
+    pc_stack.push(pc);
+    pc = jmp;
+    return Update();
+}
+
+// Sets
+int CPU::Ops5000(unsigned short op) {
+    long long temp_long = 0;
+    int temp_int = 0;
+    short temp_short = 0;
+    switch (op) {
+    // ------------------------------- SET REGISTER ------------------------------------------------
+    // ------------------------------- SET u8 ------------------------------------------------
         case 0x5000:
             registers[0] = stack[pc + 2];
             pc++;
@@ -418,14 +461,17 @@ int CPU::Update() {
             registers[3] = stack[pc + 2];
             pc++;
             break;
-// ------------------------------- SET u16 ------------------------------------------------
+    // ------------------------------- SET u16 ------------------------------------------------
         case 0x5001:
             temp_short = 0;
             for (int i = 2; i < 4; i++) {
                 temp_int += stack[pc + i];
             }
             registers[0] = temp_int;
-            pc++;pc++;pc++;pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
             break;
         case 0x5101:
             temp_short = 0;
@@ -433,7 +479,10 @@ int CPU::Update() {
                 temp_int += stack[pc + i];
             }
             registers[1] = temp_int;
-            pc++;pc++;pc++;pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
             break;
         case 0x5201:
             temp_short = 0;
@@ -441,7 +490,10 @@ int CPU::Update() {
                 temp_int += stack[pc + i];
             }
             registers[2] = temp_int;
-            pc++;pc++;pc++;pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
             break;
         case 0x5301:
             temp_short = 0;
@@ -449,16 +501,22 @@ int CPU::Update() {
                 temp_int += stack[pc + i];
             }
             registers[3] = temp_int;
-            pc++;pc++;pc++;pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
             break;
-// ------------------------------- SET u32 ------------------------------------------------
+    // ------------------------------- SET u32 ------------------------------------------------
         case 0x5002:
             temp_int = 0;
             for (int i = 2; i < 6; i++) {
                 temp_int += stack[pc + i];
             }
             registers[0] = temp_int;
-            pc++;pc++;pc++;pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
             break;
         case 0x5102:
             temp_int = 0;
@@ -466,7 +524,10 @@ int CPU::Update() {
                 temp_int += stack[pc + i];
             }
             registers[1] = temp_int;
-            pc++;pc++;pc++;pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
             break;
         case 0x5202:
             temp_int = 0;
@@ -474,24 +535,37 @@ int CPU::Update() {
                 temp_int += stack[pc + i];
             }
             registers[2] = temp_int;
-            pc++;pc++;pc++;pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
             break;
-        case 0x5302:
-            temp_int = 0;
+            case 0x5302:
+                temp_int = 0;
             for (int i = 2; i < 6; i++) {
                 temp_int += stack[pc + i];
             }
             registers[3] = temp_int;
-            pc++;pc++;pc++;pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
             break;
-// ------------------------------- SET u64 ------------------------------------------------
+    // ------------------------------- SET u64 ------------------------------------------------
         case 0x5003:
             temp_long = 0;
             for (int i = 2; i < 10; i++) {
                 temp_long += stack[pc + i];
             }
             registers[0] = temp_long;
-            pc++;pc++;pc++;pc++;pc++;pc++;pc++;pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
             break;
         case 0x5103:
             temp_long = 0;
@@ -499,7 +573,14 @@ int CPU::Update() {
                 temp_long += stack[pc + i];
             }
             registers[1] = temp_long;
-            pc++;pc++;pc++;pc++;pc++;pc++;pc++;pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
             break;
         case 0x5203:
             temp_long = 0;
@@ -507,7 +588,14 @@ int CPU::Update() {
                 temp_long += stack[pc + i];
             }
             registers[2] = temp_long;
-            pc++;pc++;pc++;pc++;pc++;pc++;pc++;pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
             break;
         case 0x5303:
             temp_long = 0;
@@ -515,9 +603,31 @@ int CPU::Update() {
                 temp_long += stack[pc + i];
             }
             registers[3] = temp_long;
-            pc++;pc++;pc++;pc++;pc++;pc++;pc++;pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
+            pc++;
             break;
+        default:
+            return NotImplemented((short)op);
+    }
+    pc += 2;
+    return Update();
+}
+
+// Load, Store
+int CPU::Ops6000(unsigned short op) {
+    return NotImplemented((short)op);
+}
+
+// Randoms
+int CPU::Ops7000(unsigned short op) {
 // ------------------------------- RANDOM ------------------------------------------------
+    switch (op) {
         case 0x7000:
             registers[0] = rand() % 101 + 1;
             break;
@@ -530,344 +640,364 @@ int CPU::Update() {
         case 0x7300:
             registers[3] = rand() % 101 + 1;
             break;
+        default:
+            return NotImplemented((short)op);
+    }
+    pc += 2;
+    return Update();
+}
+
+// Math
+int CPU::Ops8000(unsigned short op) {
 // ------------------------------- MATH ------------------------------------------------
+    switch (op) {
         case 0x8000:
             registers[0] += registers[0];
-            break;
+        break;
         case 0x8010:
             registers[0] += registers[1];
-            break;
+        break;
         case 0x8020:
             registers[0] += registers[2];
-            break;
+        break;
         case 0x8030:
             registers[0] += registers[3];
-            break;
+        break;
         case 0x8100:
             registers[1] += registers[0];
-            break;
+        break;
         case 0x8110:
             registers[1] += registers[1];
-            break;
+        break;
         case 0x8120:
             registers[1] += registers[2];
-            break;
+        break;
         case 0x8130:
             registers[1] += registers[3];
-            break;
+        break;
         case 0x8200:
             registers[2] += registers[0];
-            break;
+        break;
         case 0x8210:
             registers[2] += registers[1];
-            break;
+        break;
         case 0x8220:
             registers[2] += registers[2];
-            break;
+        break;
         case 0x8230:
             registers[2] += registers[3];
-            break;
+        break;
         case 0x8300:
             registers[3] += registers[0];
-            break;
+        break;
         case 0x8310:
             registers[3] += registers[1];
-            break;
+        break;
         case 0x8320:
             registers[3] += registers[2];
-            break;
+        break;
         case 0x8330:
             registers[3] += registers[3];
-            break;
+        break;
         case 0x8001:
             registers[0] |= registers[0];
-            break;
+        break;
         case 0x8011:
             registers[0] |= registers[1];
-            break;
+        break;
         case 0x8021:
             registers[0] |= registers[2];
-            break;
+        break;
         case 0x8031:
             registers[0] |= registers[3];
-            break;
+        break;
         case 0x8101:
             registers[1] |= registers[0];
-            break;
+        break;
         case 0x8111:
             registers[1] |= registers[1];
-            break;
+        break;
         case 0x8121:
             registers[1] |= registers[2];
-            break;
+        break;
         case 0x8131:
             registers[1] |= registers[3];
-            break;
+        break;
         case 0x8201:
             registers[2] |= registers[0];
-            break;
+        break;
         case 0x8211:
             registers[2] |= registers[1];
-            break;
+        break;
         case 0x8221:
             registers[2] |= registers[2];
-            break;
+        break;
         case 0x8231:
             registers[2] |= registers[3];
-            break;
+        break;
         case 0x8301:
             registers[3] |= registers[0];
-            break;
+        break;
         case 0x8311:
             registers[3] |= registers[1];
-            break;
+        break;
         case 0x8321:
             registers[3] |= registers[2];
-            break;
+        break;
         case 0x8331:
             registers[3] |= registers[3];
-            break;
+        break;
         case 0x8002:
             registers[0] &= registers[0];
-            break;
+        break;
         case 0x8012:
             registers[0] &= registers[1];
-            break;
+        break;
         case 0x8022:
             registers[0] &= registers[2];
-            break;
+        break;
         case 0x8032:
             registers[0] &= registers[3];
-            break;
+        break;
         case 0x8102:
             registers[1] &= registers[0];
-            break;
+        break;
         case 0x8112:
             registers[1] &= registers[1];
-            break;
+        break;
         case 0x8122:
             registers[1] &= registers[2];
-            break;
+        break;
         case 0x8132:
             registers[1] &= registers[3];
-            break;
+        break;
         case 0x8202:
             registers[2] &= registers[0];
-            break;
+        break;
         case 0x8212:
             registers[2] &= registers[1];
-            break;
+        break;
         case 0x8222:
             registers[2] &= registers[2];
-            break;
+        break;
         case 0x8232:
             registers[2] &= registers[3];
-            break;
+        break;
         case 0x8302:
             registers[3] &= registers[0];
-            break;
+        break;
         case 0x8312:
             registers[3] &= registers[1];
-            break;
+        break;
         case 0x8322:
             registers[3] &= registers[2];
-            break;
+        break;
         case 0x8332:
             registers[3] &= registers[3];
-            break;
+        break;
         case 0x8003:
             registers[0] ^= registers[0];
-            break;
+        break;
         case 0x8013:
             registers[0] ^= registers[1];
-            break;
+        break;
         case 0x8023:
             registers[0] ^= registers[2];
-            break;
+        break;
         case 0x8033:
             registers[0] ^= registers[3];
-            break;
+        break;
         case 0x8103:
             registers[1] ^= registers[0];
-            break;
+        break;
         case 0x8113:
             registers[1] ^= registers[1];
-            break;
+        break;
         case 0x8123:
             registers[1] ^= registers[2];
-            break;
+        break;
         case 0x8133:
             registers[1] ^= registers[3];
-            break;
+        break;
         case 0x8203:
             registers[2] ^= registers[0];
-            break;
+        break;
         case 0x8213:
             registers[2] ^= registers[1];
-            break;
+        break;
         case 0x8223:
             registers[2] ^= registers[2];
-            break;
+        break;
         case 0x8233:
             registers[2] ^= registers[3];
-            break;
+        break;
         case 0x8303:
             registers[3] ^= registers[0];
-            break;
+        break;
         case 0x8313:
             registers[3] ^= registers[1];
-            break;
+        break;
         case 0x8323:
             registers[3] ^= registers[2];
-            break;
+        break;
         case 0x8333:
             registers[3] ^= registers[3];
-            break;
+        break;
         case 0x8004:
             registers[0] -= registers[0];
-            break;
+        break;
         case 0x8014:
             registers[0] -= registers[1];
-            break;
+        break;
         case 0x8024:
             registers[0] -= registers[2];
-            break;
+        break;
         case 0x8034:
             registers[0] -= registers[3];
-            break;
+        break;
         case 0x8104:
             registers[1] -= registers[0];
-            break;
+        break;
         case 0x8114:
             registers[1] -= registers[1];
-            break;
+        break;
         case 0x8124:
             registers[1] -= registers[2];
-            break;
+        break;
         case 0x8134:
             registers[1] -= registers[3];
-            break;
+        break;
         case 0x8204:
             registers[2] -= registers[0];
-            break;
+        break;
         case 0x8214:
             registers[2] -= registers[1];
-            break;
+        break;
         case 0x8224:
             registers[2] -= registers[2];
-            break;
+        break;
         case 0x8234:
             registers[2] -= registers[3];
-            break;
+        break;
         case 0x8304:
             registers[3] -= registers[0];
-            break;
+        break;
         case 0x8314:
             registers[3] -= registers[1];
-            break;
+        break;
         case 0x8324:
             registers[3] -= registers[2];
-            break;
+        break;
         case 0x8334:
             registers[3] -= registers[3];
-            break;
+        break;
         case 0x8005:
             registers[0] *= registers[0];
-            break;
+        break;
         case 0x8015:
             registers[0] *= registers[1];
-            break;
+        break;
         case 0x8025:
             registers[0] *= registers[2];
-            break;
+        break;
         case 0x8035:
             registers[0] *= registers[3];
-            break;
+        break;
         case 0x8105:
             registers[1] *= registers[0];
-            break;
+        break;
         case 0x8115:
             registers[1] *= registers[1];
-            break;
+        break;
         case 0x8125:
             registers[1] *= registers[2];
-            break;
+        break;
         case 0x8135:
             registers[1] *= registers[3];
-            break;
+        break;
         case 0x8205:
             registers[2] *= registers[0];
-            break;
+        break;
         case 0x8215:
             registers[2] *= registers[1];
-            break;
+        break;
         case 0x8225:
             registers[2] *= registers[2];
-            break;
+        break;
         case 0x8235:
             registers[2] *= registers[3];
-            break;
+        break;
         case 0x8305:
             registers[3] *= registers[0];
-            break;
+        break;
         case 0x8315:
             registers[3] *= registers[1];
-            break;
+        break;
         case 0x8325:
             registers[3] *= registers[2];
-            break;
+        break;
         case 0x8335:
             registers[3] *= registers[3];
-            break;
+        break;
         case 0x8006:
             registers[0] /= registers[0];
-            break;
+        break;
         case 0x8016:
             registers[0] /= registers[1];
-            break;
+        break;
         case 0x8026:
             registers[0] /= registers[2];
-            break;
+        break;
         case 0x8036:
             registers[0] /= registers[3];
-            break;
+        break;
         case 0x8106:
             registers[1] /= registers[0];
-            break;
+        break;
         case 0x8116:
             registers[1] /= registers[1];
-            break;
+        break;
         case 0x8126:
             registers[1] /= registers[2];
-            break;
+        break;
         case 0x8136:
             registers[1] /= registers[3];
-            break;
+        break;
         case 0x8206:
             registers[2] /= registers[0];
-            break;
+        break;
         case 0x8216:
             registers[2] /= registers[1];
-            break;
+        break;
         case 0x8226:
             registers[2] /= registers[2];
-            break;
+        break;
         case 0x8236:
             registers[2] /= registers[3];
-            break;
+        break;
         case 0x8306:
             registers[3] /= registers[0];
-            break;
+        break;
         case 0x8316:
             registers[3] /= registers[1];
-            break;
+        break;
         case 0x8326:
             registers[3] /= registers[2];
-            break;
+        break;
         case 0x8336:
             registers[3] /= registers[3];
             break;
+        default:
+            return NotImplemented((short)op);
+    }
+    pc += 2;
+    return Update();
+}
+
+// Skips
+int CPU::Ops9000(unsigned short op) {
 // ------------------------------- SKIPS ------------------------------------------------
+    switch (op) {
         case 0x9000:
             if (registers[0] == 0)
                 pc += 2;
@@ -1070,7 +1200,18 @@ int CPU::Update() {
                 pc += 2;
             break;
         case 0x9333:
+            break;
+        default:
+            return NotImplemented((short)op);
+    }
+    pc += 2;
+    return Update();
+}
+
+// Load
+int CPU::OpsA000(unsigned short op) {
 // ------------------------------- LOADS ------------------------------------------------
+    switch (op) {
         case 0xA000:
             break;
         case 0xA010:
@@ -1118,9 +1259,51 @@ int CPU::Update() {
         default:
             return NotImplemented((short)op);
     }
-
     pc += 2;
     return Update();
+}
+
+
+int CPU::Update() {
+    if (pc + 1 >= MAX_STACK)
+        return 50;
+
+    unsigned char first_half = stack[pc];
+    unsigned char second_half = stack[pc + 1];
+    unsigned short op = first_half;
+    op = op << 8;
+    op += second_half;
+    int first = (op & 0b1111000000000000);
+    first = (first >> 12);
+    std::cout << "OP: " <<  std::hex << op << std::endl;
+    std::cout << "FIRST: " << std::hex << first << std::endl;
+
+    switch (first) {
+        case 0:
+            return Ops0000(op);
+        case 1:
+            return Ops1000(op);
+        case 2:
+            return Ops2000(op);
+        case 3:
+            return Ops3000(op);
+        case 4:
+            return Ops4000(op);
+        case 5:
+            return Ops5000(op);
+        case 6:
+            return Ops6000(op);
+        case 7:
+            return Ops7000(op);
+        case 8:
+            return Ops8000(op);
+        case 9:
+            return Ops9000(op);
+        case 10: // 0xA
+            return OpsA000(op);
+        default:
+            return NotImplemented((short)op);
+    }
 }
 
 void CPU::Dump() {

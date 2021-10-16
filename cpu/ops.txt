@@ -6,6 +6,8 @@
 23XY JGT VX, VY     // DONE
 240X JZ VX          // DONE
 300X PRNT X         // DONE
+301X PRNT_CHAR X         // NI
+302X PRNT_FLOAT X         // NI
 4NNN CALL NNN       // DONE
 5X00 SET VX, $KK u8 // DONE
 5X01 SET VX, $KK u16 // DONE
