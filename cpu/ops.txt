@@ -1,24 +1,24 @@
-00E0 CLS            // DONE
-00EE RET            // DONE
-1NNN JMP NNN        // DONE
-21XY JE VX, VY      // DONE
-22XY JNE VX, VY     // DONE
-23XY JGT VX, VY     // DONE
-240X JZ VX          // DONE
-300X PRNT X         // DONE
-301X PRNT_CHAR X         // NI
-302X PRNT_FLOAT X         // NI
-4NNN CALL NNN       // DONE
-5X00 SET VX, $KK u8 // DONE
+00E0 CLS             // DONE
+00EE RET             // DONE
+1NNN JMP NNN         // DONE
+21XY JE VX, VY       // DONE
+22XY JNE VX, VY      // DONE
+23XY JGT VX, VY      // DONE
+240X JZ VX           // DONE
+300X PRNT X          // DONE
+301X PRNT_CHAR X     // DONE
+302X PRNT_FLOAT X    // DONE
+4NNN CALL NNN        // DONE
+5X00 SET VX, $KK u8  // DONE
 5X01 SET VX, $KK u16 // DONE
 5X02 SET VX, $KK u32 // DONE
 5X03 SET VX, $KK u64 // DONE
 
-6X00 LOAD VX, $KK u8 // NI
-6X01 LOAD VX, $KK u16 // NI
-6X02 LOAD VX, $KK u32 // NI
-6X03 LOAD VX, $KK u64 // NI
-6X10 STORE VX, $KK u8 // NI
+6X00 LOAD VX, $KK u8   // NI
+6X01 LOAD VX, $KK u16  // NI
+6X02 LOAD VX, $KK u32  // NI
+6X03 LOAD VX, $KK u64  // NI
+6X10 STORE VX, $KK u8  // NI
 6X11 STORE VX, $KK u16 // NI
 6X12 STORE VX, $KK u32 // NI
 6X13 STORE VX, $KK u64 // NI
