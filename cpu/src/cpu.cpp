@@ -33,6 +33,9 @@ int CPU::Start() {
 int CPU::Update() {
     if (pc + 1 >= MAX_STACK)
         return 50;
+    long long temp_long = 0;
+    int temp_int = 0;
+    short temp_short = 0;
     unsigned char first_half = stack[pc];
     unsigned char second_half = stack[pc + 1];
     unsigned short op = first_half;
@@ -400,6 +403,7 @@ int CPU::Update() {
             std::cout << (int)registers[3] << std::endl;
             break;
 // ------------------------------- SET REGISTER ------------------------------------------------
+// ------------------------------- SET u8 ------------------------------------------------
         case 0x5000:
             registers[0] = stack[pc + 2];
             pc++;
@@ -415,6 +419,105 @@ int CPU::Update() {
         case 0x5300:
             registers[3] = stack[pc + 2];
             pc++;
+            break;
+// ------------------------------- SET u16 ------------------------------------------------
+        case 0x5001:
+            temp_short = 0;
+            for (int i = 2; i < 4; i++) {
+                temp_int += stack[pc + i];
+            }
+            registers[0] = temp_int;
+            pc++;pc++;pc++;pc++;
+            break;
+        case 0x5101:
+            temp_short = 0;
+            for (int i = 2; i < 4; i++) {
+                temp_int += stack[pc + i];
+            }
+            registers[1] = temp_int;
+            pc++;pc++;pc++;pc++;
+            break;
+        case 0x5201:
+            temp_short = 0;
+            for (int i = 2; i < 4; i++) {
+                temp_int += stack[pc + i];
+            }
+            registers[2] = temp_int;
+            pc++;pc++;pc++;pc++;
+            break;
+        case 0x5301:
+            temp_short = 0;
+            for (int i = 2; i < 4; i++) {
+                temp_int += stack[pc + i];
+            }
+            registers[3] = temp_int;
+            pc++;pc++;pc++;pc++;
+            break;
+// ------------------------------- SET u32 ------------------------------------------------
+        case 0x5002:
+            temp_int = 0;
+            for (int i = 2; i < 6; i++) {
+                temp_int += stack[pc + i];
+            }
+            registers[0] = temp_int;
+            pc++;pc++;pc++;pc++;
+            break;
+        case 0x5102:
+            temp_int = 0;
+            for (int i = 2; i < 6; i++) {
+                temp_int += stack[pc + i];
+            }
+            registers[1] = temp_int;
+            pc++;pc++;pc++;pc++;
+            break;
+        case 0x5202:
+            temp_int = 0;
+            for (int i = 2; i < 6; i++) {
+                temp_int += stack[pc + i];
+            }
+            registers[2] = temp_int;
+            pc++;pc++;pc++;pc++;
+            break;
+        case 0x5302:
+            temp_int = 0;
+            for (int i = 2; i < 6; i++) {
+                temp_int += stack[pc + i];
+            }
+            registers[3] = temp_int;
+            pc++;pc++;pc++;pc++;
+            break;
+// ------------------------------- SET u64 ------------------------------------------------
+        case 0x5003:
+            temp_long = 0;
+            for (int i = 2; i < 10; i++) {
+                temp_long += stack[pc + i];
+            }
+            registers[0] = temp_long;
+            pc++;pc++;pc++;pc++;pc++;pc++;pc++;pc++;
+            break;
+        case 0x5103:
+            temp_long = 0;
+            for (int i = 2; i < 10; i++) {
+                temp_long += stack[pc + i];
+            }
+            registers[1] = temp_long;
+            pc++;pc++;pc++;pc++;pc++;pc++;pc++;pc++;
+            break;
+        case 0x5203:
+            temp_long = 0;
+            for (int i = 2; i < 10; i++) {
+                temp_long += stack[pc + i];
+            }
+            registers[2] = temp_long;
+            pc++;pc++;pc++;pc++;pc++;pc++;pc++;pc++;
+            break;
+        case 0x5303:
+            temp_long = 0;
+            for (int i = 2; i < 10; i++) {
+                temp_long += stack[pc + i];
+            }
+            registers[3] = temp_long;
+            pc++;pc++;pc++;pc++;pc++;pc++;pc++;pc++;
             break;
 // ------------------------------- RANDOM ------------------------------------------------
         case 0x7000:
