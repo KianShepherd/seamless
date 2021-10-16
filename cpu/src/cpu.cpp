@@ -1,8 +1,8 @@
 #include "../include/cpu.h"
 
-CPU::CPU(unsigned char* program, int program_size) {
+CPU::CPU(const unsigned char* program, int program_size) {
     pc = 0;
-    registers = new long[MAX_REGISTERS];
+    registers = new long long[MAX_REGISTERS];
     for (int i = 0; i < MAX_REGISTERS; i++)
         registers[i] = 0;
     
@@ -17,9 +17,7 @@ CPU::CPU(unsigned char* program, int program_size) {
 
 }
 
-CPU::~CPU() {
-
-}
+CPU::~CPU() = default;
 
 int NotImplemented(short op) {
     std::cout << "OP not implemented: " << std::hex << op << std::endl;
@@ -67,7 +65,7 @@ int CPU::Update() {
             return 0;
 // ------------------------------- RETURN ------------------------------------------------
         case 0x00EE:
-            if (pc_stack.size() == 0) {
+            if (pc_stack.empty()) {
                 return -2;
             }
             pc = pc_stack.top();
@@ -75,128 +73,128 @@ int CPU::Update() {
             break;
 // ------------------------------- JUMPS ------------------------------------------------
         case 0x2100:
-            pc = registers[pc + 2];
+            pc = (int)registers[pc + 2];
             break;
         case 0x2101:
             if (registers[0] == registers[1]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2102:
             if (registers[0] == registers[2]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2103:
             if (registers[0] == registers[3]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2110:
             if (registers[1] == registers[0]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2111:
-            pc = registers[pc + 2];
+            pc = (int)registers[pc + 2];
             break;
         case 0x2112:
             if (registers[1] == registers[2]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2113:
             if (registers[1] == registers[3]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2120:
             if (registers[2] == registers[0]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2121:
             if (registers[2] == registers[1]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2122:
-            pc = registers[pc + 2];
+            pc = (int)registers[pc + 2];
             break;
         case 0x2123:
             if (registers[2] == registers[3]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2130:
             if (registers[3] == registers[0]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2131:
             if (registers[3] == registers[1]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2132:
             if (registers[3] == registers[2]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2133:
-            pc = registers[pc + 2];
+            pc = (int)registers[pc + 2];
             break;
         case 0x2200:
             pc++;
             break;
         case 0x2201:
             if (registers[0] != registers[1]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2202:
             if (registers[0] != registers[2]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2203:
             if (registers[0] != registers[3]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2210:
             if (registers[1] != registers[0]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
@@ -206,28 +204,28 @@ int CPU::Update() {
             break;
         case 0x2212:
             if (registers[1] != registers[2]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2213:
             if (registers[1] != registers[3]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2220:
             if (registers[2] != registers[0]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2221:
             if (registers[2] != registers[1]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
@@ -237,62 +235,60 @@ int CPU::Update() {
             break;
         case 0x2223:
             if (registers[2] != registers[3]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2230:
             if (registers[3] != registers[0]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2231:
             if (registers[3] != registers[1]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2232:
             if (registers[3] != registers[2]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2233:
-            pc++;
-            break;
         case 0x2300:
             pc++;
             break;
         case 0x2301:
             if (registers[0] > registers[1]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2302:
             if (registers[0] > registers[2]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2303:
             if (registers[0] > registers[3]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2310:
             if (registers[1] > registers[0]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
@@ -302,28 +298,28 @@ int CPU::Update() {
             break;
         case 0x2312:
             if (registers[1] > registers[2]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2313:
             if (registers[1] > registers[3]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2320:
             if (registers[2] > registers[0]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2321:
             if (registers[2] > registers[1]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
@@ -333,28 +329,28 @@ int CPU::Update() {
             break;
         case 0x2323:
             if (registers[2] > registers[3]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2330:
             if (registers[3] > registers[0]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2331:
             if (registers[3] > registers[1]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2332:
             if (registers[3] > registers[2]) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
@@ -364,28 +360,28 @@ int CPU::Update() {
             break;
         case 0x2400:
             if (registers[0] == 0) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2401:
             if (registers[1] == 0) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2402:
             if (registers[2] == 0) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
             break;
         case 0x2403:
             if (registers[3] == 0) {
-                pc = registers[pc + 2];
+                pc = (int)registers[pc + 2];
             } else {
                 pc++;
             }
@@ -1017,7 +1013,6 @@ int CPU::Update() {
                 pc += 2;
             break;
         case 0x9233:
-            break;
         case 0x9300:
             break;
         case 0x9301:
@@ -1073,7 +1068,6 @@ int CPU::Update() {
                 pc += 2;
             break;
         case 0x9333:
-            break;
 // ------------------------------- LOADS ------------------------------------------------
         case 0xA000:
             break;
@@ -1120,7 +1114,7 @@ int CPU::Update() {
         case 0xA330:
             break;
         default:
-            return NotImplemented(op);
+            return NotImplemented((short)op);
     }
 
     pc += 2;
