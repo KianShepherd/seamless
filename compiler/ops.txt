@@ -1,12 +1,12 @@
 00E0 CLS            // DONE
-00EE RET            // NI
+00EE RET            // DONE
 1NNN JMP NNN        // DONE
 21XY JE VX, VY      // DONE
 22XY JNE VX, VY     // DONE
 23XY JGT VX, VY     // DONE
 240X JZ VX          // DONE
 300X PRNT X         // DONE
-4NNN CALL NNN       // NI
+4NNN CALL NNN       // DONE
 
 5X00 SET VX, $KK u8 // DONE
 5X01 SET VX, $KK u16 // NI

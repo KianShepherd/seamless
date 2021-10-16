@@ -14,7 +14,7 @@ CPU::CPU(unsigned char* program, int program_size) {
         stack[i] = 0;
         }
     }
-        
+
 }
 
 CPU::~CPU() {
@@ -53,7 +53,9 @@ int CPU::Update() {
     if (op >= 0x4000 && op <= 0x4FFF) {
         unsigned short jmp = (op << 4);
         jmp = (jmp >> 4);
-        return NotImplemented(op);
+        pc_stack.push(pc);
+        pc = jmp;
+        return Update();
     }
 
     switch (op) {
@@ -62,7 +64,12 @@ int CPU::Update() {
             return 0;
 // ------------------------------- RETURN ------------------------------------------------
         case 0x00EE:
-            return NotImplemented(op);
+            if (pc_stack.size() == 0) {
+                return -2;
+            }
+            pc = pc_stack.top();
+            pc_stack.pop();
+            break;
 // ------------------------------- JUMPS ------------------------------------------------
         case 0x2100:
             pc = registers[pc + 2];
