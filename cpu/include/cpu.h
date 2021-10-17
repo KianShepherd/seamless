@@ -26,6 +26,7 @@ class CPU {
         int Ops8000(unsigned short op);
         int Ops9000(unsigned short op);
         int OpsA000(unsigned short op);
+        int OpsF000(unsigned short op);
 
         int Update();
         int pc;

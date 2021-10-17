@@ -96,6 +96,8 @@ for i in registers:
     for j in registers:
         ops["LD " + i + ", " + j] = "A" + i + j + "0"
 
+for i in registers:
+    ops["DBG " + i] = "FFF" + i
 
 def handle_SET(sasm_str):
     split_str = sasm_str.split()

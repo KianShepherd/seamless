@@ -35,3 +35,4 @@
 92XY SKNE VX, VY       // DONE
 93XY SKGT VX, VY       // DONE
 AXY0 LD VX, VY         // DONE
+FFFX DBG VX            // DONE

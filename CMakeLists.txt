@@ -8,4 +8,6 @@ include_directories(cpu/include)
 add_executable(seamless_cpu
         cpu/include/cpu.h
         cpu/src/cpu.cpp
-        cpu/main.cpp)
+        cpu/main.cpp
+        cpu/src/tests.cpp
+        cpu/include/tests.h)

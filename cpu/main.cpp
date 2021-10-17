@@ -1,4 +1,5 @@
 #include "include/cpu.h"
+#include "include/tests.h"
 #include <string.h>
 #include <iostream>
 #include <vector>
@@ -35,6 +36,10 @@ int main(int argc, char** argv) {
     for (int i = 1; i < argc; i++) {
         if (strcmp("-d", argv[i]) == 0) {
             dump_cpu = true;
+        } else if (strcmp("-t", argv[i]) == 0) {
+            dump_cpu = true;
+            auto tests = new Tests();
+            return tests->run();
         } else {
             file_names[file_count++] = argv[i];
         }

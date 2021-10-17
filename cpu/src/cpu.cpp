@@ -1263,6 +1263,21 @@ int CPU::OpsA000(unsigned short op) {
     return Update();
 }
 
+// Debug
+int CPU::OpsF000(unsigned short op) {
+    switch (op) {
+        case 0xFFF0:
+            return registers[0];
+        case 0xFFF1:
+            return registers[1];
+        case 0xFFF2:
+            return registers[2];
+        case 0xFFF3:
+            return registers[3];
+        default:
+            return NotImplemented((short)op);
+    }
+}
 
 int CPU::Update() {
     if (pc + 1 >= MAX_STACK)
@@ -1302,6 +1317,8 @@ int CPU::Update() {
             return Ops9000(op);
         case 10: // 0xA
             return OpsA000(op);
+        case 15: // 0xF
+            return OpsF000(op);
         default:
             return NotImplemented((short)op);
     }
