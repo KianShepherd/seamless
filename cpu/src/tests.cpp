@@ -4,6 +4,7 @@ int Tests::run() {
     addTest();
     subTest();
     setTest();
+    jumpTest();
     return 0;
 }
 
@@ -62,6 +63,18 @@ int Tests::setTest() {
         std::cout << "SET test 1: PASS" << std::endl;
     } else {
         std::cout << "SET test 1 RC: " << rc << ", FAIL" << std::endl;
+    }
+
+    return 0;
+}
+
+int Tests::jumpTest() {
+    load_program("test_programs/jump1.se");
+    auto rc = cpu->Start();
+    if (0 == rc) {
+        std::cout << "JUMP test 1: PASS" << std::endl;
+    } else {
+        std::cout << "JUMP test 1 RC: " << rc << ", FAIL" << std::endl;
     }
 
     return 0;

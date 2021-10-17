@@ -15,6 +15,7 @@ private:
     int addTest();
     int subTest();
     int setTest();
+    int jumpTest();
     int dump(std::istream& ins, char* program_data );
 };
 

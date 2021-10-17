@@ -2,4 +2,5 @@ JMP 005
 SET 0, 2
 SET 1, 4
 SET 2, 5
-CLS
+SET 3, 5
+DBG 0
