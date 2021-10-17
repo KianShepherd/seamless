@@ -15,30 +15,55 @@ Tests::Tests() {
 int Tests::addTest() {
     load_program("test_programs/add1.se");
     auto rc = cpu->Start();
-    std::cout << "Starting ADD test 1 RC: " << (int)rc << ", " << ((8 == rc) ? " PASS" : " FAIL") << std::endl;
+    if (8 == rc) {
+        std::cout << "ADD test 1: PASS" << std::endl;
+    } else {
+        std::cout << "ADD test 1 RC: " << rc << ", FAIL" << std::endl;
+    }
     load_program("test_programs/add2.se");
     rc = cpu->Start();
-    std::cout << "Starting ADD test 2 RC: " << (int)rc << ", " << ((33 == rc) ? " PASS" : " FAIL") << std::endl;
+    if (33 == rc) {
+        std::cout << "ADD test 2: PASS" << std::endl;
+    } else {
+        std::cout << "ADD test 2 RC: " << rc << ", FAIL" << std::endl;
+    }
     load_program("test_programs/add3.se");
     rc = cpu->Start();
-    std::cout << "Starting ADD test 3 RC: " << (int)rc << ", " << ((16 == rc) ? " PASS" : " FAIL") << std::endl;
+    if (16 == rc) {
+        std::cout << "ADD test 3: PASS" << std::endl;
+    } else {
+        std::cout << "ADD test 3 RC: " << rc << ", FAIL" << std::endl;
+    }
     load_program("test_programs/add4.se");
     rc = cpu->Start();
-    std::cout << "Starting ADD test 4 RC: " << (int)rc << ", " << ((326 == rc) ? " PASS" : " FAIL") << std::endl;
+    if (326 == rc) {
+        std::cout << "ADD test 4: PASS" << std::endl;
+    } else {
+        std::cout << "ADD test 4 RC: " << rc << ", FAIL" << std::endl;
+    }
     return 0;
 }
 
 int Tests::subTest() {
-    load_program("test_programs/sub.se");
+    load_program("test_programs/sub1.se");
     auto rc = cpu->Start();
-    std::cout << "Starting SUB test RC: " << rc << ", " << ((2 == rc) ? " PASS" : " FAIL") << std::endl;
+    if (2 == rc) {
+        std::cout << "SUB test 1: PASS" << std::endl;
+    } else {
+        std::cout << "SUB test 1 RC: " << rc << ", FAIL" << std::endl;
+    }
     return 0;
 }
 
 int Tests::setTest() {
     load_program("test_programs/set1.se");
     auto rc = cpu->Start();
-    std::cout << "Starting SET test 1 RC: " << rc << ", " << ((276 == rc) ? " PASS" : " FAIL") << std::endl;
+    if (276 == rc) {
+        std::cout << "SET test 1: PASS" << std::endl;
+    } else {
+        std::cout << "SET test 1 RC: " << rc << ", FAIL" << std::endl;
+    }
+
     return 0;
 }
 
