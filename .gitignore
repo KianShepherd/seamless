@@ -5,3 +5,5 @@ seamless*
 .idea
 .idea/*
 cmake-*
+venv*
+venv/*
