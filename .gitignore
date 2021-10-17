@@ -7,3 +7,5 @@ seamless*
 cmake-*
 venv*
 venv/*
+/venv*
+/venv/*
