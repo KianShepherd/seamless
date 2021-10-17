@@ -3,3 +3,4 @@ SET 1, 3
 ADD 0, 1
 PRNT 0
 CLS
+LD 0, 1

@@ -1,45 +1,71 @@
 #include "include/cpu.h"
 #include <string.h>
 #include <iostream>
+#include <vector>
+#include <fstream>
+#include <ciso646>
+#include <iomanip>
+#include <string>
 
-int main(int argc, char** argv) {
-    bool dump_cpu = false;
+int dump(std::istream& ins, char* program_data ) {
+    std::cout << std::setfill( '0' ) << std::hex << std::uppercase;
+    int program_size = 0;
 
-    for (int i = 0; i < argc; i++) {
-        if (strcmp("-d", argv[i]) == 0) {
-            dump_cpu = true;
+    while (ins) {
+        char s[16];
+        std::size_t n, i;
+        ins.read(s, sizeof(s));
+        n = ins.gcount();
+
+        for (i = 0; i < n; i++) {
+            program_data[program_size] = (int)(s[i]);
+            //std::string temp(1, s[i]);
+            program_size++;
         }
     }
 
-    int program_size = 14;
-    auto* program_data = new unsigned char[program_size];
-    program_data[0] = 0x10;
-    program_data[1] = 0x04;
-    program_data[2] = 0x00;
-    program_data[3] = 0x00;
-    program_data[4] = 0x50;
-    program_data[5] = 0x00;
-    program_data[6] = 0x48;
-    program_data[7] = 0x51;
-    program_data[8] = 0x00;
-    program_data[9] = 0x0a;
-    program_data[10] = 0x30;
-    program_data[11] = 0x10;
-    program_data[12] = 0x00;
-    program_data[13] = 0xE0;
+    return program_size;
+}
 
-    int rc;
-    CPU* cpu = new CPU(program_data, program_size);
 
-    if (dump_cpu)
-        cpu->Dump();
+int main(int argc, char** argv) {
+    bool dump_cpu = false;
+    auto file_names = new std::string[10];
+    int file_count = 0;
+    for (int i = 1; i < argc; i++) {
+        if (strcmp("-d", argv[i]) == 0) {
+            dump_cpu = true;
+        } else {
+            file_names[file_count++] = argv[i];
+        }
+    }
 
-    rc = cpu->Start();
+    int rc = 0;
+    for (int i = 0; i < file_count; i++) {
+        //std::cout << file_names[i] << std::endl;
+        std::ifstream bin_file(file_names[i], std::ios::binary);
 
-    if (dump_cpu)
-        cpu->Dump();
+        int length;
+        char*  program_data = new char[200];
+        if (bin_file.is_open()) {
+            length = dump(bin_file,  program_data);
+            bin_file.close();
+            CPU* cpu = new CPU(program_data, length);
 
-    //std::cout << rc << std::endl;
+            if (dump_cpu)
+                cpu->Dump();
+
+            rc = cpu->Start();
+
+            if (dump_cpu)
+                cpu->Dump();
+
+            //std::cout << rc << std::endl;
+        } else {
+            std::cout << "Failed to open file: " << file_names[0] << std::endl;
+            throw std::exception();
+        }
+    }
 
     return rc;
 }

@@ -11,7 +11,7 @@
 class CPU {
     public:
         void Dump();
-        CPU(const unsigned char* program, int program_size);
+        CPU(const char* program, int program_size);
         ~CPU();
         int Start();
     private:
@@ -30,6 +30,6 @@ class CPU {
         int Update();
         int pc;
         long long* registers;
-        unsigned char* stack;
+        char* stack;
         std::stack<long> pc_stack;
 };

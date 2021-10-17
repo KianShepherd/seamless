@@ -1,17 +1,17 @@
 #include "../include/cpu.h"
 
-CPU::CPU(const unsigned char* program, int program_size) {
+CPU::CPU(const char* program, int program_size) {
     pc = 0;
     registers = new long long[MAX_REGISTERS];
     for (int i = 0; i < MAX_REGISTERS; i++)
         registers[i] = 0;
     
-    stack = new unsigned char[MAX_STACK];
+    stack = new char[MAX_STACK];
     for (int i = 0; i < MAX_STACK; i++) {
         if (i < program_size) {
             stack[i] = program[i];
         } else {
-        stack[i] = 0;
+            stack[i] = 0;
         }
     }
 
