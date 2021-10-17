@@ -113,7 +113,7 @@ def handle_SET(sasm_str):
         elif value <= 65535:
             value = str(hex(value))
             value = value[2:].upper()
-            while len(value) < 4:
+            while len(value) <= 4:
                 value = "0" + value
             ret_str = ret_str + "01"
         elif value <= 4294967295:

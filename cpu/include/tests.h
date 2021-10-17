@@ -14,7 +14,7 @@ private:
     CPU *cpu;
     int addTest();
     int subTest();
-    int jumpTest();
+    int setTest();
     int dump(std::istream& ins, char* program_data );
 };
 

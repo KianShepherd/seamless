@@ -461,156 +461,140 @@ int CPU::Ops5000(unsigned short op) {
             registers[3] = stack[pc + 2];
             pc++;
             break;
-    // ------------------------------- SET u16 ------------------------------------------------
+// ------------------------------- SET u16 ------------------------------------------------
         case 0x5001:
             temp_short = 0;
             for (int i = 2; i < 4; i++) {
-                temp_int += stack[pc + i];
+                temp_short += stack[pc + i];
+                if (i != 3) {
+                    temp_short = temp_short << 8;
+                }
             }
-            registers[0] = temp_int;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
+            registers[0] = temp_short;
+            pc++;pc++;
             break;
         case 0x5101:
             temp_short = 0;
             for (int i = 2; i < 4; i++) {
-                temp_int += stack[pc + i];
+                temp_short += stack[pc + i];
+                if (i != 3) {
+                    temp_short = temp_short << 8;
+                }
             }
-            registers[1] = temp_int;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
+            registers[1] = temp_short;
+            pc++;pc++;
             break;
         case 0x5201:
             temp_short = 0;
             for (int i = 2; i < 4; i++) {
-                temp_int += stack[pc + i];
+                temp_short += stack[pc + i];
+                if (i != 3) {
+                    temp_short = temp_short << 8;
+                }
             }
-            registers[2] = temp_int;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
+            registers[2] = temp_short;
+            pc++;pc++;
             break;
         case 0x5301:
             temp_short = 0;
             for (int i = 2; i < 4; i++) {
-                temp_int += stack[pc + i];
+                temp_short += stack[pc + i];
+                if (i != 3) {
+                    temp_short = temp_short << 8;
+                }
             }
-            registers[3] = temp_int;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
+            registers[3] = temp_short;
+            pc++;pc++;
             break;
-    // ------------------------------- SET u32 ------------------------------------------------
+// ------------------------------- SET u32 ------------------------------------------------
         case 0x5002:
             temp_int = 0;
             for (int i = 2; i < 6; i++) {
                 temp_int += stack[pc + i];
+                if (i != 5) {
+                    temp_int = temp_int << 8;
+                }
             }
             registers[0] = temp_int;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
+            pc++;pc++;pc++;pc++;
             break;
         case 0x5102:
             temp_int = 0;
             for (int i = 2; i < 6; i++) {
                 temp_int += stack[pc + i];
+                if (i != 5) {
+                    temp_int = temp_int << 8;
+                }
             }
             registers[1] = temp_int;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
+            pc++;pc++;pc++;pc++;
             break;
         case 0x5202:
             temp_int = 0;
             for (int i = 2; i < 6; i++) {
                 temp_int += stack[pc + i];
+                if (i != 5) {
+                    temp_int = temp_int << 8;
+                }
             }
             registers[2] = temp_int;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
+            pc++;pc++;pc++;pc++;
             break;
-            case 0x5302:
-                temp_int = 0;
+        case 0x5302:
+            temp_int = 0;
             for (int i = 2; i < 6; i++) {
                 temp_int += stack[pc + i];
+                if (i != 5) {
+                    temp_int = temp_int << 8;
+                }
             }
             registers[3] = temp_int;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
+            pc++;pc++;pc++;pc++;
             break;
-    // ------------------------------- SET u64 ------------------------------------------------
+// ------------------------------- SET u64 ------------------------------------------------
         case 0x5003:
             temp_long = 0;
             for (int i = 2; i < 10; i++) {
                 temp_long += stack[pc + i];
+                if (i != 9) {
+                    temp_long = temp_long << 8;
+                }
             }
             registers[0] = temp_long;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
+            pc++;pc++;pc++;pc++;pc++;pc++;pc++;pc++;
             break;
         case 0x5103:
             temp_long = 0;
             for (int i = 2; i < 10; i++) {
                 temp_long += stack[pc + i];
+                if (i != 9) {
+                    temp_long = temp_long << 8;
+                }
             }
             registers[1] = temp_long;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
+            pc++;pc++;pc++;pc++;pc++;pc++;pc++;pc++;
             break;
         case 0x5203:
             temp_long = 0;
             for (int i = 2; i < 10; i++) {
                 temp_long += stack[pc + i];
+                if (i != 9) {
+                    temp_long = temp_long << 8;
+                }
             }
             registers[2] = temp_long;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
+            pc++;pc++;pc++;pc++;pc++;pc++;pc++;pc++;
             break;
         case 0x5303:
             temp_long = 0;
             for (int i = 2; i < 10; i++) {
                 temp_long += stack[pc + i];
+                if (i != 9) {
+                    temp_long = temp_long << 8;
+                }
             }
             registers[3] = temp_long;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
-            pc++;
+            pc++;pc++;pc++;pc++;pc++;pc++;pc++;pc++;
             break;
         default:
             return NotImplemented((short)op);

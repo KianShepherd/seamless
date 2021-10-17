@@ -3,6 +3,7 @@
 int Tests::run() {
     addTest();
     subTest();
+    setTest();
     return 0;
 }
 
@@ -12,20 +13,32 @@ Tests::Tests() {
 }
 
 int Tests::addTest() {
-    load_program("test_programs/add.se");
+    load_program("test_programs/add1.se");
     auto rc = cpu->Start();
-    std::cout << "Starting ADD test RC: " << rc << ", " << ((8 == rc) ? " PASS" : " FAIL") << std::endl;
-    return rc;
+    std::cout << "Starting ADD test 1 RC: " << (int)rc << ", " << ((8 == rc) ? " PASS" : " FAIL") << std::endl;
+    load_program("test_programs/add2.se");
+    rc = cpu->Start();
+    std::cout << "Starting ADD test 2 RC: " << (int)rc << ", " << ((33 == rc) ? " PASS" : " FAIL") << std::endl;
+    load_program("test_programs/add3.se");
+    rc = cpu->Start();
+    std::cout << "Starting ADD test 3 RC: " << (int)rc << ", " << ((16 == rc) ? " PASS" : " FAIL") << std::endl;
+    load_program("test_programs/add4.se");
+    rc = cpu->Start();
+    std::cout << "Starting ADD test 4 RC: " << (int)rc << ", " << ((326 == rc) ? " PASS" : " FAIL") << std::endl;
+    return 0;
 }
 
 int Tests::subTest() {
     load_program("test_programs/sub.se");
     auto rc = cpu->Start();
     std::cout << "Starting SUB test RC: " << rc << ", " << ((2 == rc) ? " PASS" : " FAIL") << std::endl;
-    return rc;
+    return 0;
 }
 
-int Tests::jumpTest() {
+int Tests::setTest() {
+    load_program("test_programs/set1.se");
+    auto rc = cpu->Start();
+    std::cout << "Starting SET test 1 RC: " << rc << ", " << ((276 == rc) ? " PASS" : " FAIL") << std::endl;
     return 0;
 }
 
