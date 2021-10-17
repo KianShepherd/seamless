@@ -203,28 +203,29 @@ def handle_STORE(sasm_str):
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        out = ""
-        filename = sys.argv[1]
-        extension = os.path.splitext(filename)[1]
-        basename = os.path.splitext(filename)[0]
-        if extension != ".sasm":
-            print("Unknown filetype, only .sasm files will be processed.")
-        f = open(filename, 'r')
-        for line in f.readlines():
-            line = line.strip()
-            if line in ops.keys():
-                out = out + ops[line]
-            else:
-                temp = handle_SET(line) + handle_STORE(line) + handle_LOAD(line)
-                if len(temp) > 0:
-                    out = out + temp
+        for i in range(1, len(sys.argv)):
+            out = ""
+            filename = sys.argv[i]
+            extension = os.path.splitext(filename)[1]
+            basename = os.path.splitext(filename)[0]
+            if extension != ".sasm":
+                print("Unknown filetype, only .sasm files will be processed.")
+            f = open(filename, 'r')
+            for line in f.readlines():
+                line = line.strip()
+                if line in ops.keys():
+                    out = out + ops[line]
                 else:
-                    print("Line not known: {}".format(line))
-        f.close()
-        print(out)
-        f = open(basename + ".se", 'wb')
-        bytes_arr = []
-        for i in range(0, len(out) - 1, 2):
-            bytes_arr.append(int(out[i] + out[i + 1], 16))
-        f.write(bytearray(bytes_arr))
-        f.close()
+                    temp = handle_SET(line) + handle_STORE(line) + handle_LOAD(line)
+                    if len(temp) > 0:
+                        out = out + temp
+                    else:
+                        print("Line not known: {}".format(line))
+            f.close()
+            print(out)
+            f = open(basename + ".se", 'wb')
+            bytes_arr = []
+            for j in range(0, len(out) - 1, 2):
+                bytes_arr.append(int(out[j] + out[j + 1], 16))
+            f.write(bytearray(bytes_arr))
+            f.close()
