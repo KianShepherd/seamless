@@ -1,10 +1,10 @@
+#include <vector>
 #include "../include/tests.h"
 
 int Tests::run() {
-    addTest();
-    subTest();
-    setTest();
-    jumpTest();
+    setTests();
+    jumpTests();
+    mathTests();
     return 0;
 }
 
@@ -13,71 +13,85 @@ Tests::Tests() {
     cpu = new CPU(program_data, 0);
 }
 
+int Tests::mathTests() {
+    int passes = 0;
+    std::cout << "Running Math Tests" << std::endl;
+    passes += addTest();
+    passes += subTest();
+
+    std::cout << "    Math tests: " << passes << "/2" << std::endl;
+
+    return (passes == 2) ? 1 : 0;
+}
+
 int Tests::addTest() {
-    load_program("test_programs/add1.se");
-    auto rc = cpu->Start();
-    if (8 == rc) {
-        std::cout << "ADD test 1: PASS" << std::endl;
-    } else {
-        std::cout << "ADD test 1 RC: " << rc << ", FAIL" << std::endl;
-    }
-    load_program("test_programs/add2.se");
-    rc = cpu->Start();
-    if (33 == rc) {
-        std::cout << "ADD test 2: PASS" << std::endl;
-    } else {
-        std::cout << "ADD test 2 RC: " << rc << ", FAIL" << std::endl;
-    }
-    load_program("test_programs/add3.se");
-    rc = cpu->Start();
-    if (16 == rc) {
-        std::cout << "ADD test 3: PASS" << std::endl;
-    } else {
-        std::cout << "ADD test 3 RC: " << rc << ", FAIL" << std::endl;
-    }
-    load_program("test_programs/add4.se");
-    rc = cpu->Start();
-    if (326 == rc) {
-        std::cout << "ADD test 4: PASS" << std::endl;
-    } else {
-        std::cout << "ADD test 4 RC: " << rc << ", FAIL" << std::endl;
-    }
-    return 0;
+    int passes = 0;
+    std::cout << "    Running Add tests" << std::endl;
+    passes += run_test("test_programs/add1.se", 8);
+    passes += run_test("test_programs/add2.se", 33);
+    passes += run_test("test_programs/add3.se", 16);
+    passes += run_test("test_programs/add4.se", 326);
+
+    std::cout << "        Add tests: " << passes << "/4" << std::endl;
+
+    return (passes == 4) ? 1 : 0;
 }
 
 int Tests::subTest() {
-    load_program("test_programs/sub1.se");
-    auto rc = cpu->Start();
-    if (2 == rc) {
-        std::cout << "SUB test 1: PASS" << std::endl;
-    } else {
-        std::cout << "SUB test 1 RC: " << rc << ", FAIL" << std::endl;
-    }
-    return 0;
+    int passes = 0;
+    std::cout << "    Running Sub tests" << std::endl;
+    passes += run_test("test_programs/sub1.se", 2);
+    passes += run_test("test_programs/sub2.se", 7);
+    passes += run_test("test_programs/sub3.se", 253);
+    passes += run_test("test_programs/sub4.se", 5);
+
+    std::cout << "        Sub tests: " << passes << "/4" << std::endl;
+
+    return (passes == 4) ? 1 : 0;
 }
 
-int Tests::setTest() {
-    load_program("test_programs/set1.se");
-    auto rc = cpu->Start();
-    if (276 == rc) {
-        std::cout << "SET test 1: PASS" << std::endl;
-    } else {
-        std::cout << "SET test 1 RC: " << rc << ", FAIL" << std::endl;
-    }
+int Tests::setTests() {
+    int passes = 0;
+    std::cout << "Running Set tests" << std::endl;
+    passes += run_test("test_programs/set1.se", 276);
+    passes += run_test("test_programs/set2.se", 2);
+    passes += run_test("test_programs/set3.se", 65530);
+    passes += run_test("test_programs/set4.se", 65540);
+    passes += run_test("test_programs/set5.se", 4294967290);
+    passes += run_test("test_programs/set6.se", 4294967300);
+    //passes += run_test("test_programs/set7.se", 18446744073709551613, true);
+    passes += run_test("test_programs/set8.se", 255);
+    std::cout << "    Set tests: " << passes << "/7" << std::endl;
 
-    return 0;
+    return (passes == 8) ? 1 : 0;
 }
 
-int Tests::jumpTest() {
-    load_program("test_programs/jump1.se");
-    auto rc = cpu->Start();
-    if (0 == rc) {
-        std::cout << "JUMP test 1: PASS" << std::endl;
-    } else {
-        std::cout << "JUMP test 1 RC: " << rc << ", FAIL" << std::endl;
-    }
+int Tests::jumpTests() {
+    int passes = 0;
+    std::cout << "Running Jump tests" << std::endl;
+    passes += run_test("test_programs/jump1.se", 0);
 
-    return 0;
+    std::cout << "    Jump tests: " << passes << "/1" << std::endl;
+
+    return (passes == 1) ? 1 : 0;
+}
+
+int Tests::run_test(std::string file_name, long long rc_to_compare, bool debug) {
+    load_program(file_name);
+    if (debug) {
+        cpu->Dump();
+    }
+    auto rc = cpu->Start();
+    if (rc_to_compare == rc) {
+        std::cout << "        " << file_name << " PASS" << std::endl;
+        return 1;
+    } else {
+        if (debug) {
+            cpu->Dump();
+        }
+        std::cout << "        " << file_name << " RC: " << (long long)rc << ", FAIL" << std::endl;
+        return 0;
+    }
 }
 
 void Tests::load_program(const std::string& file_name) {
@@ -85,28 +99,64 @@ void Tests::load_program(const std::string& file_name) {
 
     int length;
     char*  program_data = new char[200];
+    std::ostringstream ret;
     if (bin_file.is_open()) {
         length = dump(bin_file, program_data);
         bin_file.close();
+        //std::cout << "SEARCH FOR ME" << std::endl;
+        for (int i = 0; i < length; i++){
+            //std::cout << "char" << std::endl;
+            ret.str(std::string());
+            //std::cout << program_data[i] << std::endl;
+            ret << std::hex << std::setfill('0') << std::setw(2) << std::uppercase << (int) program_data[i];
+            //std::cout << ret.str().substr(0, 2) << std::endl;
+            //std::cout << (int)program_data[i] << std::endl << std::endl << std::endl;
+            std::string temp_str = ret.str();
+            temp_str = temp_str.substr(temp_str.length() - 2, temp_str.length());
+            program_data[i] = (long long)((unsigned char)string_to_vector(temp_str));
+            //std::cout << std::dec << (long long)((unsigned char)program_data[i]) << " " << (((unsigned char)program_data[i] > 255) ? "TRUE" : "FALSE") << std::endl << temp_str << std::endl << std::endl;
+        }
         cpu = new CPU(program_data, length);
     }
 }
 
-int Tests::dump(std::istream& ins, char* program_data ) {
+unsigned char Tests::string_to_vector(std::basic_string<char> str) {
+    unsigned char number = 0;
+    number += hex_char_to_int( str[0] );
+    number = (number << 4);
+    unsigned char number2 = 0;
+    number2 += hex_char_to_int( str[1] );
+    number2 = number2 << 4;
+    number2 = number2 >> 4;
+    number = number + number2;
+
+    return number;
+}
+
+unsigned char Tests::hex_char_to_int(char c) {
+    unsigned char result = 0;
+    if (('0' <= c) && (c <= '9')) {
+        result = c - '0';
+    } else if(('A' <= c) && (c <= 'F')) {
+        result = 10 + c - 'A';
+    }
+    return result;
+}
+
+int Tests::dump(std::istream& ins, char* program_data) {
     std::cout << std::setfill( '0' ) << std::hex << std::uppercase;
     int program_size = 0;
 
     while (ins) {
-        char s[16];
-        std::size_t n, i;
+        char s[1];
         ins.read(s, sizeof(s));
-        n = ins.gcount();
 
-        for (i = 0; i < n; i++) {
-            program_data[program_size] = (int)(s[i]);
-            //std::string temp(1, s[i]);
-            program_size++;
-        }
+        int temp = (s[0]) << 24;
+        temp = temp >> 24;
+        //std::cout <<  temp << " ";
+        program_data[program_size] = temp;
+        //std::cout << std::hex << temp << std::endl;
+        program_size++;
     }
 
     return program_size;
