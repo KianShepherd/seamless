@@ -2,9 +2,12 @@
 #include "../include/tests.h"
 
 unsigned long long Tests::run() {
-    setTests();
-    jumpTests();
-    mathTests();
+    int passes = 0;
+    std::cout << "RUNNING ALL TESTS" << std::endl;
+    passes += setTests();
+    passes += jumpTests();
+    passes += mathTests();
+    std::cout << "ALL TESTS " << passes << "/3" << std::endl;
     return 0;
 }
 
@@ -15,44 +18,44 @@ Tests::Tests() {
 
 unsigned long long Tests::mathTests() {
     int passes = 0;
-    std::cout << "Running Math Tests" << std::endl;
+    std::cout << "    Running Math Tests" << std::endl;
     passes += addTest();
     passes += subTest();
 
-    std::cout << "    Math tests: " << passes << "/2" << std::endl;
+    std::cout << "        Math tests: " << passes << "/2" << std::endl;
 
     return (passes == 2) ? 1 : 0;
 }
 
 unsigned long long Tests::addTest() {
     int passes = 0;
-    std::cout << "    Running Add tests" << std::endl;
+    std::cout << "        Running Add tests" << std::endl;
     passes += run_test("test_programs/add1.se", 8);
     passes += run_test("test_programs/add2.se", 33);
     passes += run_test("test_programs/add3.se", 16);
     passes += run_test("test_programs/add4.se", 326);
 
-    std::cout << "        Add tests: " << passes << "/4" << std::endl;
+    std::cout << "            Add tests: " << passes << "/4" << std::endl;
 
     return (passes == 4) ? 1 : 0;
 }
 
 unsigned long long Tests::subTest() {
     int passes = 0;
-    std::cout << "    Running Sub tests" << std::endl;
+    std::cout << "        Running Sub tests" << std::endl;
     passes += run_test("test_programs/sub1.se", 2);
     passes += run_test("test_programs/sub2.se", 7);
     passes += run_test("test_programs/sub3.se", 253);
     passes += run_test("test_programs/sub4.se", 5);
 
-    std::cout << "        Sub tests: " << passes << "/4" << std::endl;
+    std::cout << "            Sub tests: " << passes << "/4" << std::endl;
 
     return (passes == 4) ? 1 : 0;
 }
 
 unsigned long long Tests::setTests() {
     int passes = 0;
-    std::cout << "Running Set tests" << std::endl;
+    std::cout << "    Running Set tests" << std::endl;
     passes += run_test("test_programs/set1.se", 276);
     passes += run_test("test_programs/set2.se", 2);
     passes += run_test("test_programs/set3.se", 65530);
@@ -61,17 +64,17 @@ unsigned long long Tests::setTests() {
     passes += run_test("test_programs/set6.se", 4294967300);
     passes += run_test("test_programs/set7.se", 18446744073709551613);
     passes += run_test("test_programs/set8.se", 255);
-    std::cout << "    Set tests: " << passes << "/8" << std::endl;
+    std::cout << "        Set tests: " << passes << "/8" << std::endl;
 
     return (passes == 8) ? 1 : 0;
 }
 
 unsigned long long Tests::jumpTests() {
     int passes = 0;
-    std::cout << "Running Jump tests" << std::endl;
+    std::cout << "    Running Jump tests" << std::endl;
     passes += run_test("test_programs/jump1.se", 0);
 
-    std::cout << "    Jump tests: " << passes << "/1" << std::endl;
+    std::cout << "        Jump tests: " << passes << "/1" << std::endl;
 
     return (passes == 1) ? 1 : 0;
 }
@@ -83,13 +86,13 @@ unsigned long long Tests::run_test(std::string file_name, unsigned long long rc_
     }
     auto rc = cpu->Start();
     if (rc_to_compare == rc) {
-        std::cout << "        " << file_name << " PASS" << std::endl;
+        std::cout << "            " << file_name << " PASS" << std::endl;
         return 1;
     } else {
         if (debug) {
             cpu->Dump();
         }
-        std::cout << "        " << file_name << " RC: " << (long long)rc << ", FAIL" << std::endl;
+        std::cout << "            " << file_name << " RC: " << (long long)rc << ", FAIL" << std::endl;
         return 0;
     }
 }
