@@ -1,7 +1,7 @@
 #include <vector>
 #include "../include/tests.h"
 
-int Tests::run() {
+unsigned long long Tests::run() {
     setTests();
     jumpTests();
     mathTests();
@@ -13,7 +13,7 @@ Tests::Tests() {
     cpu = new CPU(program_data, 0);
 }
 
-int Tests::mathTests() {
+unsigned long long Tests::mathTests() {
     int passes = 0;
     std::cout << "Running Math Tests" << std::endl;
     passes += addTest();
@@ -24,7 +24,7 @@ int Tests::mathTests() {
     return (passes == 2) ? 1 : 0;
 }
 
-int Tests::addTest() {
+unsigned long long Tests::addTest() {
     int passes = 0;
     std::cout << "    Running Add tests" << std::endl;
     passes += run_test("test_programs/add1.se", 8);
@@ -37,7 +37,7 @@ int Tests::addTest() {
     return (passes == 4) ? 1 : 0;
 }
 
-int Tests::subTest() {
+unsigned long long Tests::subTest() {
     int passes = 0;
     std::cout << "    Running Sub tests" << std::endl;
     passes += run_test("test_programs/sub1.se", 2);
@@ -50,7 +50,7 @@ int Tests::subTest() {
     return (passes == 4) ? 1 : 0;
 }
 
-int Tests::setTests() {
+unsigned long long Tests::setTests() {
     int passes = 0;
     std::cout << "Running Set tests" << std::endl;
     passes += run_test("test_programs/set1.se", 276);
@@ -59,14 +59,14 @@ int Tests::setTests() {
     passes += run_test("test_programs/set4.se", 65540);
     passes += run_test("test_programs/set5.se", 4294967290);
     passes += run_test("test_programs/set6.se", 4294967300);
-    //passes += run_test("test_programs/set7.se", 18446744073709551613, true);
+    passes += run_test("test_programs/set7.se", 18446744073709551613);
     passes += run_test("test_programs/set8.se", 255);
-    std::cout << "    Set tests: " << passes << "/7" << std::endl;
+    std::cout << "    Set tests: " << passes << "/8" << std::endl;
 
     return (passes == 8) ? 1 : 0;
 }
 
-int Tests::jumpTests() {
+unsigned long long Tests::jumpTests() {
     int passes = 0;
     std::cout << "Running Jump tests" << std::endl;
     passes += run_test("test_programs/jump1.se", 0);
@@ -76,7 +76,7 @@ int Tests::jumpTests() {
     return (passes == 1) ? 1 : 0;
 }
 
-int Tests::run_test(std::string file_name, long long rc_to_compare, bool debug) {
+unsigned long long Tests::run_test(std::string file_name, unsigned long long rc_to_compare, bool debug) {
     load_program(file_name);
     if (debug) {
         cpu->Dump();
@@ -120,7 +120,7 @@ void Tests::load_program(const std::string& file_name) {
     }
 }
 
-unsigned char Tests::string_to_vector(std::basic_string<char> str) {
+unsigned char string_to_vector(std::basic_string<char> str) {
     unsigned char number = 0;
     number += hex_char_to_int( str[0] );
     number = (number << 4);
@@ -133,7 +133,7 @@ unsigned char Tests::string_to_vector(std::basic_string<char> str) {
     return number;
 }
 
-unsigned char Tests::hex_char_to_int(char c) {
+unsigned char hex_char_to_int(char c) {
     unsigned char result = 0;
     if (('0' <= c) && (c <= '9')) {
         result = c - '0';

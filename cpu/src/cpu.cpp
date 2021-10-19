@@ -21,16 +21,16 @@ CPU::CPU(const char* program, int program_size) {
 
 CPU::~CPU() = default;
 
-long long  NotImplemented(short op) {
+unsigned long long  NotImplemented(short op) {
     std::cout << "OP not implemented: " << std::hex << op << std::endl;
-    return -1;
+    return 255;
 }
 
-long long  CPU::Start() {
+unsigned long long  CPU::Start() {
     return Update();
 }
 // Exit, Return
-long long  CPU::Ops0000(unsigned short op) {
+unsigned long long  CPU::Ops0000(unsigned short op) {
     switch (op) {
 // ------------------------------- EXIT ------------------------------------------------
         case 0x00E0:
@@ -49,7 +49,7 @@ long long  CPU::Ops0000(unsigned short op) {
 }
 
 // Jump NNN
-long long  CPU::Ops1000(unsigned short op) {
+unsigned long long  CPU::Ops1000(unsigned short op) {
     unsigned short jmp = (op << 4);
     jmp = (jmp >> 4);
     pc = jmp;
@@ -58,7 +58,7 @@ long long  CPU::Ops1000(unsigned short op) {
 }
 
 // Jumps
-long long  CPU::Ops2000(unsigned short op) {
+unsigned long long  CPU::Ops2000(unsigned short op) {
     switch (op) {
         // ------------------------------- JUMPS ------------------------------------------------
         case 0x2100:
@@ -382,7 +382,7 @@ long long  CPU::Ops2000(unsigned short op) {
 }
 
 // Prints
-long long  CPU::Ops3000(unsigned short op) {
+unsigned long long  CPU::Ops3000(unsigned short op) {
     pc += 2;
     switch (op) {
     // print int
@@ -430,7 +430,7 @@ long long  CPU::Ops3000(unsigned short op) {
 }
 
 // Call NNN
-long long  CPU::Ops4000(unsigned short op) {
+unsigned long long  CPU::Ops4000(unsigned short op) {
 // ------------------------------- CALL ------------------------------------------------
     unsigned short jmp = (op << 4);
     jmp = (jmp >> 4);
@@ -440,7 +440,7 @@ long long  CPU::Ops4000(unsigned short op) {
 }
 
 // Sets
-long long  CPU::Ops5000(unsigned short op) {
+unsigned long long  CPU::Ops5000(unsigned short op) {
     unsigned long long temp_long = 0;
     unsigned int temp_int = 0;
     unsigned short temp_short = 0;
@@ -606,12 +606,12 @@ long long  CPU::Ops5000(unsigned short op) {
 }
 
 // Load, Store
-long long  CPU::Ops6000(unsigned short op) {
+unsigned long long  CPU::Ops6000(unsigned short op) {
     return NotImplemented((short)op);
 }
 
 // Randoms
-long long  CPU::Ops7000(unsigned short op) {
+unsigned long long  CPU::Ops7000(unsigned short op) {
 // ------------------------------- RANDOM ------------------------------------------------
     switch (op) {
         case 0x7000:
@@ -634,7 +634,7 @@ long long  CPU::Ops7000(unsigned short op) {
 }
 
 // Math
-long long  CPU::Ops8000(unsigned short op) {
+unsigned long long  CPU::Ops8000(unsigned short op) {
 // ------------------------------- MATH ------------------------------------------------
     switch (op) {
         case 0x8000:
@@ -981,7 +981,7 @@ long long  CPU::Ops8000(unsigned short op) {
 }
 
 // Skips
-long long  CPU::Ops9000(unsigned short op) {
+unsigned long long  CPU::Ops9000(unsigned short op) {
 // ------------------------------- SKIPS ------------------------------------------------
     switch (op) {
         case 0x9000:
@@ -1195,7 +1195,7 @@ long long  CPU::Ops9000(unsigned short op) {
 }
 
 // Load
-long long  CPU::OpsA000(unsigned short op) {
+unsigned long long  CPU::OpsA000(unsigned short op) {
 // ------------------------------- LOADS ------------------------------------------------
     switch (op) {
         case 0xA000:
@@ -1250,7 +1250,7 @@ long long  CPU::OpsA000(unsigned short op) {
 }
 
 // Debug
-long long CPU::OpsF000(unsigned short op) {
+unsigned long long CPU::OpsF000(unsigned short op) {
     switch (op) {
         case 0xFFF0:
             return registers[0];
@@ -1265,7 +1265,7 @@ long long CPU::OpsF000(unsigned short op) {
     }
 }
 
-long long  CPU::Update() {
+unsigned long long  CPU::Update() {
     if (pc + 1 >= MAX_STACK)
         return 50;
 

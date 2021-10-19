@@ -12,18 +12,19 @@ class Tests {
 public:
     Tests();
     void load_program(const std::string& file_name);
-    int run();
+    unsigned long long run();
 private:
-    unsigned char string_to_vector(std::basic_string<char> str);
-    unsigned char hex_char_to_int( char c );
-    int run_test(std::string file_name, long long rc_to_compare, bool debug=false);
+    
+    
+    unsigned long long run_test(std::string file_name, unsigned long long rc_to_compare, bool debug=false);
     CPU *cpu;
-    int mathTests();
-    int addTest();
-    int subTest();
-    int setTests();
-    int jumpTests();
+    unsigned long long mathTests();
+    unsigned long long addTest();
+    unsigned long long subTest();
+    unsigned long long setTests();
+    unsigned long long jumpTests();
     static int dump(std::istream& ins, char* program_data );
 };
 
-
+unsigned char hex_char_to_int( char c );
+unsigned char string_to_vector(std::basic_string<char> str);

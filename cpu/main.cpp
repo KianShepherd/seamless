@@ -13,16 +13,15 @@ int dump(std::istream& ins, char* program_data ) {
     int program_size = 0;
 
     while (ins) {
-        char s[16];
-        std::size_t n, i;
+        char s[1];
         ins.read(s, sizeof(s));
-        n = ins.gcount();
 
-        for (i = 0; i < n; i++) {
-            program_data[program_size] = (int)(s[i]);
-            //std::string temp(1, s[i]);
-            program_size++;
-        }
+        int temp = (s[0]) << 24;
+        temp = temp >> 24;
+        //std::cout <<  temp << " ";
+        program_data[program_size] = temp;
+        //std::cout << std::hex << temp << std::endl;
+        program_size++;
     }
 
     return program_size;
@@ -52,9 +51,28 @@ int main(int argc, char** argv) {
 
         int length;
         char*  program_data = new char[200];
+        std::ostringstream ret;
         if (bin_file.is_open()) {
             length = dump(bin_file,  program_data);
             bin_file.close();
+
+            for (int i = 0; i < length; i++){
+                //std::cout << "char" << std::endl;
+                ret.str(std::string());
+                //std::cout << program_data[i] << std::endl;
+                ret << std::hex << std::setfill('0') << std::setw(2) << std::uppercase << (int) program_data[i];
+                //std::cout << ret.str().substr(0, 2) << std::endl;
+                //std::cout << (int)program_data[i] << std::endl << std::endl << std::endl;
+                std::string temp_str = ret.str();
+                temp_str = temp_str.substr(temp_str.length() - 2, temp_str.length());
+                program_data[i] = (long long)((unsigned char)string_to_vector(temp_str));
+                //std::cout << std::dec << (long long)((unsigned char)program_data[i]) << " " << (((unsigned char)program_data[i] > 255) ? "TRUE" : "FALSE") << std::endl << temp_str << std::endl << std::endl;
+            }
+
+
+
+
+
             CPU* cpu = new CPU(program_data, length);
 
             if (dump_cpu)
