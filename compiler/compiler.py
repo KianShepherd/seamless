@@ -214,7 +214,7 @@ if __name__ == "__main__":
                 print("Unknown filetype, only .sasm files will be processed.")
             f = open(filename, 'r')
             for line in f.readlines():
-                line = line.strip()
+                line = line.strip().upper()
                 if line in ops.keys():
                     out = out + ops[line]
                 else:
