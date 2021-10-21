@@ -1,0 +1,4 @@
+SET 2, 9
+SET 3, 7
+MUL 2, 3
+DBG 2

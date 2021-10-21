@@ -21,10 +21,11 @@ unsigned long long Tests::mathTests() {
     std::cout << "    Running Math Tests" << std::endl;
     passes += addTest();
     passes += subTest();
+    passes += mulTest();
 
-    std::cout << "        Math tests: " << passes << "/2" << std::endl;
+    std::cout << "        Math tests: " << passes << "/3" << std::endl;
 
-    return (passes == 2) ? 1 : 0;
+    return (passes == 3) ? 1 : 0;
 }
 
 unsigned long long Tests::addTest() {
@@ -34,10 +35,10 @@ unsigned long long Tests::addTest() {
     passes += run_test("test_programs/add2.se", 33);
     passes += run_test("test_programs/add3.se", 16);
     passes += run_test("test_programs/add4.se", 326);
+    passes += run_test("test_programs/add5.se", 1);
+    std::cout << "            Add tests: " << passes << "/5" << std::endl;
 
-    std::cout << "            Add tests: " << passes << "/4" << std::endl;
-
-    return (passes == 4) ? 1 : 0;
+    return (passes == 5) ? 1 : 0;
 }
 
 unsigned long long Tests::subTest() {
@@ -47,10 +48,24 @@ unsigned long long Tests::subTest() {
     passes += run_test("test_programs/sub2.se", 7);
     passes += run_test("test_programs/sub3.se", 253);
     passes += run_test("test_programs/sub4.se", 5);
+    passes += run_test("test_programs/sub5.se", 18446744073709551615);
 
-    std::cout << "            Sub tests: " << passes << "/4" << std::endl;
+    std::cout << "            Sub tests: " << passes << "/5" << std::endl;
 
-    return (passes == 4) ? 1 : 0;
+    return (passes == 5) ? 1 : 0;
+}
+
+unsigned long long Tests::mulTest() {
+    int passes = 0;
+    std::cout << "        Running Add tests" << std::endl;
+    passes += run_test("test_programs/mul1.se", 15);
+    passes += run_test("test_programs/mul2.se", 270);
+    passes += run_test("test_programs/mul3.se", 63);
+    passes += run_test("test_programs/mul4.se", 13800);
+    passes += run_test("test_programs/mul5.se", 18446744073709551614);
+    std::cout << "            Add tests: " << passes << "/5" << std::endl;
+
+    return (passes == 5) ? 1 : 0;
 }
 
 unsigned long long Tests::setTests() {

@@ -1,0 +1,4 @@
+SET 0, 1
+SET 1, 0
+SUB 1, 0
+DBG 1

@@ -21,6 +21,7 @@ private:
     unsigned long long mathTests();
     unsigned long long addTest();
     unsigned long long subTest();
+    unsigned long long mulTest();
     unsigned long long setTests();
     unsigned long long jumpTests();
     static int dump(std::istream& ins, char* program_data );
