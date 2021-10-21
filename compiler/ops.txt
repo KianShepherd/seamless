@@ -1,6 +1,6 @@
-00E0 CLS               // DONE
+00E0 CLS               // TESTED
 00EE RET               // DONE
-1NNN JMP NNN           // DONE
+1NNN JMP NNN           // TESTED
 21XY JE VX, VY         // DONE
 22XY JNE VX, VY        // DONE
 23XY JGT VX, VY        // DONE
@@ -9,10 +9,12 @@
 301X PRNT_CHAR X       // DONE
 302X PRNT_FLOAT X      // DONE
 4NNN CALL NNN          // DONE
-5X00 SET VX, $KK u8    // DONE
-5X01 SET VX, $KK u16   // DONE
-5X02 SET VX, $KK u32   // DONE
-5X03 SET VX, $KK u64   // Broken
+5X00 SET VX, $KK u8    // TESTED
+5X01 SET VX, $KK u16   // TESTED
+5X02 SET VX, $KK u32   // TESTED
+5X03 SET VX, $KK u64   // TESTED
+
+// NOT IN CPU YET
 6X00 LOAD VX, $KK u8   // DONE
 6X01 LOAD VX, $KK u16  // DONE
 6X02 LOAD VX, $KK u32  // DONE
@@ -21,13 +23,14 @@
 6X11 STORE VX, $KK u16 // DONE
 6X12 STORE VX, $KK u32 // DONE
 6X13 STORE VX, $KK u64 // DONE
+
 7X00 RND VX            // DONE
-8XY0 ADD VX, VY        // DONE
+8XY0 ADD VX, VY        // TESTED
 8XY1 OR VX, VY         // DONE
 8XY2 AND VX, VY        // DONE
 8XY3 XOR VX, VY        // DONE
-8XY4 SUB VX, VY        // DONE
-8XY5 MUL VX, VY        // DONE
+8XY4 SUB VX, VY        // TESTED
+8XY5 MUL VX, VY        // TESTED
 8XY6 DIV VX, VY        // DONE
 90X0 SKZ VX            // DONE
 90X1 SKNZ VX           // DONE
@@ -35,4 +38,4 @@
 92XY SKNE VX, VY       // DONE
 93XY SKGT VX, VY       // DONE
 AXY0 LD VX, VY         // DONE
-FFFX DBG VX            // DONE
+FFFX DBG VX            // TESTED
