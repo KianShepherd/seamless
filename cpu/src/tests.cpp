@@ -22,51 +22,92 @@ unsigned long long Tests::mathTests() {
     passes += addTest();
     passes += subTest();
     passes += mulTest();
+    passes += andTest();
+    passes += orTest();
+    passes += xorTest();
 
-    std::cout << "        Math tests: " << passes << "/3" << std::endl;
 
-    return (passes == 3) ? 1 : 0;
+    std::cout << "        Math tests: " << passes << "/6" << std::endl;
+
+    return (passes == 6) ? 1 : 0;
 }
 
 unsigned long long Tests::addTest() {
     int passes = 0;
-    std::cout << "        Running Add tests" << std::endl;
+    std::cout << "        Running ADD tests" << std::endl;
     passes += run_test("test_programs/add1.se", 8);
     passes += run_test("test_programs/add2.se", 33);
     passes += run_test("test_programs/add3.se", 16);
     passes += run_test("test_programs/add4.se", 326);
     passes += run_test("test_programs/add5.se", 1);
-    std::cout << "            Add tests: " << passes << "/5" << std::endl;
+    std::cout << "            ADD tests: " << passes << "/5" << std::endl;
 
     return (passes == 5) ? 1 : 0;
 }
 
 unsigned long long Tests::subTest() {
     int passes = 0;
-    std::cout << "        Running Sub tests" << std::endl;
+    std::cout << "        Running SUB tests" << std::endl;
     passes += run_test("test_programs/sub1.se", 2);
     passes += run_test("test_programs/sub2.se", 7);
     passes += run_test("test_programs/sub3.se", 253);
     passes += run_test("test_programs/sub4.se", 5);
-    passes += run_test("test_programs/sub5.se", 18446744073709551615);
+    passes += run_test("test_programs/sub5.se", 18446744073709551615u);
 
-    std::cout << "            Sub tests: " << passes << "/5" << std::endl;
+    std::cout << "            SUB tests: " << passes << "/5" << std::endl;
 
     return (passes == 5) ? 1 : 0;
 }
 
 unsigned long long Tests::mulTest() {
     int passes = 0;
-    std::cout << "        Running Add tests" << std::endl;
+    std::cout << "        Running MUL tests" << std::endl;
     passes += run_test("test_programs/mul1.se", 15);
     passes += run_test("test_programs/mul2.se", 270);
     passes += run_test("test_programs/mul3.se", 63);
     passes += run_test("test_programs/mul4.se", 13800);
-    passes += run_test("test_programs/mul5.se", 18446744073709551614);
-    std::cout << "            Add tests: " << passes << "/5" << std::endl;
+    passes += run_test("test_programs/mul5.se", 18446744073709551614u);
+    std::cout << "            MUL tests: " << passes << "/5" << std::endl;
 
     return (passes == 5) ? 1 : 0;
 }
+
+unsigned long long Tests::andTest() {
+    int passes = 0;
+    std::cout << "        Running AND tests" << std::endl;
+    passes += run_test("test_programs/and1.se", 8);
+    passes += run_test("test_programs/and2.se", 0);
+    passes += run_test("test_programs/and3.se", 0);
+    passes += run_test("test_programs/and.se", 0);
+    std::cout << "            AND tests: " << passes << "/4" << std::endl;
+
+    return (passes == 4) ? 1 : 0;
+}
+
+unsigned long long Tests::orTest() {
+    int passes = 0;
+    std::cout << "        Running OR tests" << std::endl;
+    passes += run_test("test_programs/or1.se", 15);
+    passes += run_test("test_programs/or2.se", 3);
+    passes += run_test("test_programs/or3.se", 2);
+    passes += run_test("test_programs/or4.se", 255);
+    std::cout << "            OR tests: " << passes << "/4" << std::endl;
+
+    return (passes == 4) ? 1 : 0;
+}
+
+unsigned long long Tests::xorTest() {
+    int passes = 0;
+    std::cout << "        Running XOR tests" << std::endl;
+    passes += run_test("test_programs/xor1.se", 7);
+    passes += run_test("test_programs/xor2.se", 3);
+    passes += run_test("test_programs/xor3.se", 2);
+    passes += run_test("test_programs/xor4.se", 255);
+    std::cout << "            XOR tests: " << passes << "/4" << std::endl;
+
+    return (passes == 4) ? 1 : 0;
+}
+
 
 unsigned long long Tests::setTests() {
     int passes = 0;
@@ -77,7 +118,7 @@ unsigned long long Tests::setTests() {
     passes += run_test("test_programs/set4.se", 65540);
     passes += run_test("test_programs/set5.se", 4294967290);
     passes += run_test("test_programs/set6.se", 4294967300);
-    passes += run_test("test_programs/set7.se", 18446744073709551613);
+    passes += run_test("test_programs/set7.se", 18446744073709551613u);
     passes += run_test("test_programs/set8.se", 255);
     std::cout << "        Set tests: " << passes << "/8" << std::endl;
 

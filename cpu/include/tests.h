@@ -22,6 +22,9 @@ private:
     unsigned long long addTest();
     unsigned long long subTest();
     unsigned long long mulTest();
+    unsigned long long andTest();
+    unsigned long long orTest();
+    unsigned long long xorTest();
     unsigned long long setTests();
     unsigned long long jumpTests();
     static int dump(std::istream& ins, char* program_data );
