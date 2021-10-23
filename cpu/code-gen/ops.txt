@@ -1,5 +1,5 @@
 00E0 CLS             // WORKING
-00EE RET             // DONE
+00EE RET             // TESTED
 
 1NNN JMP NNN         // TESTED
 
@@ -12,7 +12,7 @@
 301X PRNT_CHAR X     // DONE
 302X PRNT_FLOAT X    // DONE
 
-4NNN CALL NNN        // DONE
+4NNN CALL NNN        // TESTED
 
 5X00 SET VX, $KK u8  // TESTED
 5X01 SET VX, $KK u16 // TESTED
@@ -31,12 +31,12 @@
 7X00 RND VX         // DONE
 
 8XY0 ADD VX, VY     // TESTED
-8XY1 OR VX, VY      // DONE
-8XY2 AND VX, VY     // DONE
-8XY3 XOR VX, VY     // DONE
+8XY1 OR VX, VY      // TESTED
+8XY2 AND VX, VY     // TESTED
+8XY3 XOR VX, VY     // TESTED
 8XY4 SUB VX, VY     // TESTED
-8XY5 MUL VX, VY     // DONE
-8XY6 DIV VX, VY     // DONE
+8XY5 MUL VX, VY     // TESTED
+8XY6 DIV VX, VY     // TESTED
 
 90X0 SKZ VX         // DONE
 90X1 SKNZ VX        // DONE

@@ -2,8 +2,9 @@
 #include <string>
 #include "../include/cpu.h"
 
-CPU::CPU(const char* program, int program_size) {
+CPU::CPU(const char* program, int program_size, bool debug) {
     pc = 0;
+    debugging = debug;
     registers = new unsigned long long[MAX_REGISTERS];
     for (int i = 0; i < MAX_REGISTERS; i++)
         registers[i] = 0;
@@ -434,7 +435,7 @@ unsigned long long  CPU::Ops4000(unsigned short op) {
 // ------------------------------- CALL ------------------------------------------------
     unsigned short jmp = (op << 4);
     jmp = (jmp >> 4);
-    pc_stack.push(pc);
+    pc_stack.push(pc + 2);
     pc = jmp;
     return Update();
 }
@@ -1276,9 +1277,12 @@ unsigned long long  CPU::Update() {
     op += second_half;
     int first = (op & 0b1111000000000000);
     first = (first >> 12);
-
-    //std::cout << "OP: " <<  std::hex << op << std::endl;
-    //std::cout << "FIRST: " << std::hex << first << std::endl;
+    if (debugging) {
+        std::cout << "OP: " <<  std::hex << op << std::endl;
+        std::cout << "FIRST: " << std::hex << first << std::endl;
+        std::cout << "PC: " << std::dec << pc << std::endl << std::endl;
+    }
+    
 
     switch (first) {
         case 0:

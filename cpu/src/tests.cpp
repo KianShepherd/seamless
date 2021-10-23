@@ -1,20 +1,40 @@
 #include <vector>
 #include "../include/tests.h"
 
+Tests::Tests() {
+    auto program_data = new char[0];
+    cpu = new CPU(program_data, 0, false);
+}
+
 unsigned long long Tests::run() {
     int passes = 0;
     std::cout << "RUNNING ALL TESTS" << std::endl;
     passes += setTests();
-    passes += jumpTests();
+    passes += controlFlowTests();
     passes += mathTests();
     std::cout << "ALL TESTS " << passes << "/3" << std::endl;
     return 0;
 }
 
-Tests::Tests() {
-    auto program_data = new char[0];
-    cpu = new CPU(program_data, 0);
+unsigned long long Tests::controlFlowTests() {
+    int passes = 0;
+    std::cout << "Running Control Flow tests" << std::endl;
+    passes += functionTests();
+    passes += jumpTests();
+    std::cout << "Control Flow tests " << passes << "/2" << std::endl;
+    return (passes == 2) ? 1 : 0;
 }
+
+unsigned long long Tests::functionTests() {
+    int passes = 0;
+    std::cout << "        Running CALL tests" << std::endl;
+    passes += run_test("test_programs/function1.se", 1);
+    passes += run_test("test_programs/function2.se", 2);
+    std::cout << "            CALL tests: " << passes << "/2" << std::endl;
+
+    return (passes == 2) ? 1 : 0;
+}
+
 
 unsigned long long Tests::mathTests() {
     int passes = 0;
@@ -108,7 +128,6 @@ unsigned long long Tests::xorTest() {
     return (passes == 4) ? 1 : 0;
 }
 
-
 unsigned long long Tests::setTests() {
     int passes = 0;
     std::cout << "    Running Set tests" << std::endl;
@@ -175,7 +194,7 @@ void Tests::load_program(const std::string& file_name) {
             program_data[i] = (long long)((unsigned char)string_to_vector(temp_str));
             //std::cout << std::dec << (long long)((unsigned char)program_data[i]) << " " << (((unsigned char)program_data[i] > 255) ? "TRUE" : "FALSE") << std::endl << temp_str << std::endl << std::endl;
         }
-        cpu = new CPU(program_data, length);
+        cpu = new CPU(program_data, length, false);
     }
 }
 

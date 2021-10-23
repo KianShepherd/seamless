@@ -73,7 +73,7 @@ int main(int argc, char** argv) {
 
 
 
-            CPU* cpu = new CPU(program_data, length);
+            CPU* cpu = new CPU(program_data, length, dump_cpu);
 
             if (dump_cpu)
                 cpu->Dump();
