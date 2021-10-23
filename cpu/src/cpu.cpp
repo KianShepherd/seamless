@@ -1,5 +1,3 @@
-#include <iomanip>
-#include <string>
 #include "../include/cpu.h"
 
 CPU::CPU(const unsigned char* program, int program_size, bool debug) {
@@ -17,6 +15,8 @@ CPU::CPU(const unsigned char* program, int program_size, bool debug) {
             stack[i] = 0;
         }
     }
+
+    memory.assign(MEMORY_SIZE, 0);
 }
 
 CPU::~CPU() = default;
@@ -29,6 +29,7 @@ unsigned long long  NotImplemented(short op) {
 unsigned long long  CPU::Start() {
     return Update();
 }
+
 // Exit, Return
 unsigned long long  CPU::Ops0000(unsigned short op) {
     switch (op) {
@@ -594,7 +595,36 @@ unsigned long long  CPU::Ops5000(unsigned short op) {
 
 // Load, Store
 unsigned long long  CPU::Ops6000(unsigned short op) {
-    return NotImplemented((short)op);
+    unsigned int memory_location = (stack[pc + 2]) << 8;
+    memory_location += stack[pc + 3];
+    switch (op) {
+        case 0x6001:
+            registers[0] = memory.at(memory_location);
+            break;
+        case 0x6101:
+            registers[1] = memory.at(memory_location);
+            break;
+        case 0x6201:
+            registers[2] = memory.at(memory_location);
+            break;
+        case 0x6301:
+            registers[3] = memory.at(memory_location);
+            break;
+        case 0x6011:
+            memory[memory_location] = registers[0];
+            break;
+        case 0x6111:
+            memory[memory_location] = registers[1];
+            break;
+        case 0x6211:
+            memory[memory_location] = registers[2];
+            break;
+        case 0x6311:
+            memory[memory_location] = registers[3];
+            break;
+    }
+    pc++;pc++;pc++;pc++;
+    return Update();
 }
 
 // Randoms

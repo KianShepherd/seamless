@@ -3,9 +3,13 @@
 #include <iostream>
 #include <stdlib.h>
 #include <stack>
+#include <iomanip>
+#include <string>
+#include <vector>
 
 #define MAX_REGISTERS 4
 #define MAX_STACK 4 * 1024 
+#define MEMORY_SIZE 65535
 
 
 class CPU {
@@ -35,5 +39,6 @@ class CPU {
         int pc;
         unsigned long long* registers;
         unsigned char* stack;
+        std::vector<unsigned long long> memory;
         std::stack<long> pc_stack;
 };

@@ -1,0 +1,5 @@
+SET 0, 255
+STORE 0, 0
+SET 0, 0
+LOAD 1, 0
+DBG 1

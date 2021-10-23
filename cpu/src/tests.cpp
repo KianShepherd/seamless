@@ -1,5 +1,3 @@
-#include <vector>
-#include <string.h>
 #include "../include/tests.h"
 
 Tests::Tests() {
@@ -153,9 +151,11 @@ unsigned long long Tests::setTests() {
     passes += run_test("test_programs/set7.se", 18446744073709551613u);
     passes += run_test("test_programs/set8.se", 255);
     passes += run_test("test_programs/load1.se", 255);
-    std::cout << "        Set tests: " << passes << "/9" << std::endl << std::endl;
+    passes += run_test("test_programs/setload.se", 255);
+    passes += run_test("test_programs/setload2.se", 165535);
+    std::cout << "        Set tests: " << std::dec << passes << "/11" << std::endl << std::endl;
 
-    return (passes == 9) ? 1 : 0;
+    return (passes == 11) ? 1 : 0;
 }
 
 unsigned long long Tests::jumpTests() {

@@ -126,70 +126,40 @@ def handle_SET(sasm_str):
 
 
 def handle_LOAD(sasm_str):
-    # "SET 1, 99"
+    # "LOAD 1, 99"
     split_str = sasm_str.split()
     if split_str[0] == "LOAD":
         ret_str = "6" + split_str[1][:-1]
         value = int(split_str[2])
-        if value <= 255:
-            value = str(hex(value))
-            value = value[2:].upper()
-            if len(value) < 2:
-                value = "0" + value
-            ret_str = ret_str + "00"
-        elif value <= 65535:
+        if value <= 65535:
             value = str(hex(value))
             value = value[2:].upper()
             while len(value) < 4:
                 value = "0" + value
             ret_str = ret_str + "01"
-        elif value <= 4294967295:
-            value = str(hex(value))
-            value = value[2:].upper()
-            while len(value) < 8:
-                value = "0" + value
-            ret_str = ret_str + "02"
         else:
-            value = str(hex(value))
-            value = (value[2:].upper())[:16]
-            while len(value) < 16:
-                value = "0" + value
-            ret_str = ret_str + "03"
+            print("TRIED TO LOAD NUMBER TOO LARGE")
+            return ""
         return ret_str + str(value)
     else:
         return ""
 
 
 def handle_STORE(sasm_str):
-    # "SET 1, 99"
+    # "STORE 1, 99"
     split_str = sasm_str.split()
     if split_str[0] == "STORE":
         ret_str = "6" + split_str[1][:-1]
         value = int(split_str[2])
-        if value <= 255:
-            value = str(hex(value))
-            value = value[2:].upper()
-            if len(value) < 2:
-                value = "0" + value
-            ret_str = ret_str + "10"
-        elif value <= 65535:
+        if value <= 65535:
             value = str(hex(value))
             value = value[2:].upper()
             while len(value) < 4:
                 value = "0" + value
             ret_str = ret_str + "11"
-        elif value <= 4294967295:
-            value = str(hex(value))
-            value = value[2:].upper()
-            while len(value) < 8:
-                value = "0" + value
-            ret_str = ret_str + "12"
         else:
-            value = str(hex(value))
-            value = (value[2:].upper())[:16]
-            while len(value) < 16:
-                value = "0" + value
-            ret_str = ret_str + "13"
+            print("TRIED TO STORE NUMBER TOO LARGE")
+            return ""
         return ret_str + str(value)
     else:
         return ""

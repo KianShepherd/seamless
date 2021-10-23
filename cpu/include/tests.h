@@ -6,6 +6,8 @@
 #include <iomanip>
 #include <fstream>
 #include <iomanip>
+#include <vector>
+#include <string.h>
 
 #include "../include/cpu.h"
 class Tests {
