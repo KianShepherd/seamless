@@ -13,6 +13,7 @@ unsigned long long Tests::run() {
     passes += controlFlowTests();
     passes += mathTests();
     std::cout << "ALL TESTS " << passes << "/3" << std::endl;
+    run_test("test_programs/print.se", 9, true);
     return 0;
 }
 

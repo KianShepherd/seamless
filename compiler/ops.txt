@@ -5,8 +5,8 @@
 22XY JNE VX, VY        // NEEDS REWORK
 23XY JGT VX, VY        // NEEDS REWORK
 240X JZ VX             // NEEDS REWORK
-300X PRNT X            // DONE
-301X PRNT_CHAR X       // DONE
+300X PRNT X            // TESTED
+301X PRNT_CHAR X       // TESTED
 302X PRNT_FLOAT X      // DONE
 4NNN CALL NNN          // TESTED
 5X00 SET VX, $KK u8    // TESTED

@@ -388,42 +388,42 @@ unsigned long long  CPU::Ops3000(unsigned short op) {
     switch (op) {
     // print int
         case 0x3000:
-            std::cout << (int)registers[0] << std::endl;
+            std::cout << (int)registers[0];
             return Update();
         case 0x3001:
-            std::cout << (int)registers[1] << std::endl;
+            std::cout << (int)registers[1];
             return Update();
         case 0x3002:
-            std::cout << (int)registers[2] << std::endl;
+            std::cout << (int)registers[2];
             return Update();
         case 0x3003:
-            std::cout << (int)registers[3] << std::endl;
+            std::cout << (int)registers[3];
             return Update();
     // print char
         case 0x3010:
-            std::cout << (char)registers[0] << std::endl;
+            std::cout << (char)registers[0];
             return Update();
         case 0x3011:
-            std::cout << (char)registers[1] << std::endl;
+            std::cout << (char)registers[1];
             return Update();
         case 0x3012:
-            std::cout << (char)registers[2] << std::endl;
+            std::cout << (char)registers[2];
             return Update();
         case 0x3013:
-            std::cout << (char)registers[3] << std::endl;
+            std::cout << (char)registers[3];
             return Update();
 // print float
         case 0x3020:
-            std::cout << (double)registers[0] << std::endl;
+            std::cout << (double)registers[0];
             return Update();
         case 0x3021:
-            std::cout << (double)registers[1] << std::endl;
+            std::cout << (double)registers[1];
             return Update();
         case 0x3022:
-            std::cout << (double)registers[2] << std::endl;
+            std::cout << (double)registers[2];
             return Update();
         case 0x3023:
-            std::cout << (double)registers[3] << std::endl;
+            std::cout << (double)registers[3];
             return Update();
         default:
             return NotImplemented((short)op);

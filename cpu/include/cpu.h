@@ -5,7 +5,7 @@
 #include <stack>
 
 #define MAX_REGISTERS 4
-#define MAX_STACK 2 * 1024 
+#define MAX_STACK 4 * 1024 
 
 
 class CPU {

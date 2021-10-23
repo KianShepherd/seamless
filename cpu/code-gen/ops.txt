@@ -7,8 +7,8 @@
 23XY JGT VX, VY      // DONE
 240X JZ VX           // DONE
 
-300X PRNT X          // WORKING
-301X PRNT_CHAR X     // DONE
+300X PRNT X          // TESTED
+301X PRNT_CHAR X     // TESTED
 302X PRNT_FLOAT X    // DONE
 
 4NNN CALL NNN        // TESTED
