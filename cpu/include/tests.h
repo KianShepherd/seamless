@@ -16,13 +16,14 @@ public:
 private:
     CPU *cpu;
 
-    unsigned long long run_test(std::string file_name, unsigned long long rc_to_compare, bool debug=false);
+    unsigned long long run_test(std::string file_name, unsigned long long rc_to_compare, bool should_fail = false, bool debug=false);
     
     unsigned long long mathTests();
     unsigned long long controlFlowTests();
 
     unsigned long long functionTests();
     unsigned long long jumpTests();
+    unsigned long long skipTests();
 
     unsigned long long addTest();
     unsigned long long subTest();
@@ -31,6 +32,7 @@ private:
     unsigned long long orTest();
     unsigned long long xorTest();
     unsigned long long setTests();
+    unsigned long long randTests();
     
     
 

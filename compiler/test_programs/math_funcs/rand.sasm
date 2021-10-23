@@ -1,0 +1,6 @@
+RND 1
+RND 0
+SKE 0, 1
+JMP 010
+SET 2, 5
+DBG 2

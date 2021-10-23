@@ -21,8 +21,9 @@ unsigned long long Tests::controlFlowTests() {
     std::cout << "    Running Control Flow tests" << std::endl;
     passes += functionTests();
     passes += jumpTests();
-    std::cout << "    Control Flow tests " << passes << "/2" << std::endl << std::endl;
-    return (passes == 2) ? 1 : 0;
+    passes += skipTests();
+    std::cout << "    Control Flow tests " << passes << "/3" << std::endl << std::endl;
+    return (passes == 3) ? 1 : 0;
 }
 
 unsigned long long Tests::functionTests() {
@@ -35,7 +36,6 @@ unsigned long long Tests::functionTests() {
     return (passes == 2) ? 1 : 0;
 }
 
-
 unsigned long long Tests::mathTests() {
     int passes = 0;
     std::cout << "    Running Math Tests" << std::endl;
@@ -45,11 +45,21 @@ unsigned long long Tests::mathTests() {
     passes += andTest();
     passes += orTest();
     passes += xorTest();
+    passes += randTests();
 
+    std::cout << "    Math tests: " << passes << "/7" << std::endl << std::endl;
 
-    std::cout << "        Math tests: " << passes << "/6" << std::endl << std::endl;
+    return (passes == 7) ? 1 : 0;
+}
 
-    return (passes == 6) ? 1 : 0;
+unsigned long long Tests::randTests() {
+    int passes = 0;
+    std::cout << "        Running RAND tests" << std::endl;
+    passes += run_test("test_programs/rand1.se", 5, true) == 1;
+    passes += run_test("test_programs/rand1.se", 5, true) == 1;
+    std::cout << "        RAND tests: " << passes << "/2" << std::endl;
+
+    return (passes == 2) ? 1 : 0;
 }
 
 unsigned long long Tests::addTest() {
@@ -147,28 +157,48 @@ unsigned long long Tests::setTests() {
 
 unsigned long long Tests::jumpTests() {
     int passes = 0;
-    std::cout << "    Running Jump tests" << std::endl;
+    std::cout << "    Running JUMP tests" << std::endl;
     passes += run_test("test_programs/jump1.se", 0);
 
-    std::cout << "        Jump tests: " << passes << "/1" << std::endl;
+    std::cout << "        JUMP tests: " << passes << "/1" << std::endl;
 
     return (passes == 1) ? 1 : 0;
 }
 
-unsigned long long Tests::run_test(std::string file_name, unsigned long long rc_to_compare, bool debug) {
+unsigned long long Tests::skipTests() {
+    int passes = 0;
+    std::cout << "    Running SKIP tests" << std::endl;
+    passes += run_test("test_programs/ske1.se", 0);
+    passes += run_test("test_programs/ske2.se", 255);
+    passes += run_test("test_programs/skne1.se", 255);
+    passes += run_test("test_programs/skne2.se", 1);
+
+    passes += run_test("test_programs/skz1.se", 255);
+    passes += run_test("test_programs/skz2.se", 5);
+    passes += run_test("test_programs/sknz1.se", 0);
+    passes += run_test("test_programs/sknz2.se", 255);
+    passes += run_test("test_programs/skgt1.se", 255);
+    passes += run_test("test_programs/skgt2.se", 1);
+
+    std::cout << "        SKIP tests: " << passes << "/10" << std::endl;
+
+    return (passes == 10) ? 1 : 0;
+}
+
+unsigned long long Tests::run_test(std::string file_name, unsigned long long rc_to_compare, bool should_fail, bool debug) {
     load_program(file_name);
     if (debug) {
         cpu->Dump();
     }
     auto rc = cpu->Start();
-    if (rc_to_compare == rc) {
+    if (rc_to_compare == rc || (should_fail && rc_to_compare != rc)) {
         std::cout << "            " << file_name << " PASS" << std::endl;
         return 1;
     } else {
         if (debug) {
             cpu->Dump();
         }
-        std::cout << "            " << file_name << " RC: " << (long long)rc << ", FAIL" << std::endl;
+        std::cout << "            " << file_name << " RC: " << std::hex << (long long)rc << ", FAIL" << std::endl;
         return 0;
     }
 }

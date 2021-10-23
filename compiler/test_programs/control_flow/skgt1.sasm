@@ -1,0 +1,6 @@
+SET 0, 5
+SET 1, 1
+SKGT 0, 1
+JMP 013
+SET 0, 255
+DBG 0
