@@ -182,7 +182,6 @@ unsigned long long Tests::skipTests() {
     passes += run_test("test_programs/ske2.se", 255);
     passes += run_test("test_programs/skne1.se", 255);
     passes += run_test("test_programs/skne2.se", 1);
-
     passes += run_test("test_programs/skz1.se", 255);
     passes += run_test("test_programs/skz2.se", 5);
     passes += run_test("test_programs/sknz1.se", 0);
@@ -190,7 +189,7 @@ unsigned long long Tests::skipTests() {
     passes += run_test("test_programs/skgt1.se", 255);
     passes += run_test("test_programs/skgt2.se", 1);
 
-    std::cout << "        SKIP tests: " << passes << "/10" << std::endl;
+    std::cout << "        SKIP tests: " << std::dec << passes << "/10" << std::endl;
 
     return (passes == 10) ? 1 : 0;
 }
