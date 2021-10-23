@@ -4,16 +4,21 @@ ops = dict()
 
 hex_vals = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
 registers = ['0', '1', '2', '3']
+nums = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 ops['CLS'] = "00E0"
 ops['RET'] = "00EE"
 
 
-for i in hex_vals:
-    for j in hex_vals:
-        for k in hex_vals:
-            ops["JMP " + i + j + k] = "1" + i + j + k
-
+for i in nums:
+    for j in nums:
+        for k in nums:
+            pc = int(str(i+j+k))
+            pc = (hex(pc)[2:]).upper()
+            while len(pc) < 3:
+                pc = "0" + pc
+            ops["JMP " + i + j + k] = "4" + pc
+            
 for i in registers:
     for j in registers:
         ops["JE " + i + ", " + j] = "21" + i + j
@@ -38,10 +43,14 @@ for i in registers:
 for i in registers:
     ops["PRNT_FLOAT " + i] = "302" + i
 
-for i in hex_vals:
-    for j in hex_vals:
-        for k in hex_vals:
-            ops["CALL " + i + j + k] = "4" + i + j + k
+for i in nums:
+    for j in nums:
+        for k in nums:
+            pc = int(str(i+j+k))
+            pc = (hex(pc)[2:]).upper()
+            while len(pc) < 3:
+                pc = "0" + pc
+            ops["CALL " + i + j + k] = "4" + pc
 
 for i in registers:
     ops["RND " + i] = "7" + i + "00"

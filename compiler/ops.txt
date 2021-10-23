@@ -1,5 +1,5 @@
 00E0 CLS               // TESTED
-00EE RET               // DONE
+00EE RET               // TESTED
 1NNN JMP NNN           // TESTED
 21XY JE VX, VY         // DONE
 22XY JNE VX, VY        // DONE
@@ -8,7 +8,7 @@
 300X PRNT X            // DONE
 301X PRNT_CHAR X       // DONE
 302X PRNT_FLOAT X      // DONE
-4NNN CALL NNN          // DONE
+4NNN CALL NNN          // TESTED
 5X00 SET VX, $KK u8    // TESTED
 5X01 SET VX, $KK u16   // TESTED
 5X02 SET VX, $KK u32   // TESTED
