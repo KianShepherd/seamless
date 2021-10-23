@@ -68,28 +68,28 @@ unsigned long long  CPU::Ops2000(unsigned short op) {
             if (registers[0] == registers[1]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2102:
             if (registers[0] == registers[2]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2103:
             if (registers[0] == registers[3]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2110:
             if (registers[1] == registers[0]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2111:
@@ -99,28 +99,28 @@ unsigned long long  CPU::Ops2000(unsigned short op) {
             if (registers[1] == registers[2]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2113:
             if (registers[1] == registers[3]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2120:
             if (registers[2] == registers[0]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2121:
             if (registers[2] == registers[1]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2122:
@@ -130,254 +130,254 @@ unsigned long long  CPU::Ops2000(unsigned short op) {
             if (registers[2] == registers[3]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2130:
             if (registers[3] == registers[0]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2131:
             if (registers[3] == registers[1]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2132:
             if (registers[3] == registers[2]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2133:
             pc = (int)stack[pc + 2];
             break;
         case 0x2200:
-            pc++;
+            pc++;pc++;pc++;
             break;
         case 0x2201:
             if (registers[0] != registers[1]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2202:
             if (registers[0] != registers[2]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2203:
             if (registers[0] != registers[3]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2210:
             if (registers[1] != registers[0]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2211:
-            pc++;
+            pc++;pc++;pc++;
             break;
         case 0x2212:
             if (registers[1] != registers[2]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2213:
             if (registers[1] != registers[3]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2220:
             if (registers[2] != registers[0]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2221:
             if (registers[2] != registers[1]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2222:
-            pc++;
+            pc++;pc++;pc++;
             break;
         case 0x2223:
             if (registers[2] != registers[3]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2230:
             if (registers[3] != registers[0]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2231:
             if (registers[3] != registers[1]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2232:
             if (registers[3] != registers[2]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2233:
         case 0x2300:
-            pc++;
+            pc++;pc++;pc++;
             break;
         case 0x2301:
             if (registers[0] > registers[1]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2302:
             if (registers[0] > registers[2]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2303:
             if (registers[0] > registers[3]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2310:
             if (registers[1] > registers[0]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2311:
-            pc++;
+            pc++;pc++;pc++;
             break;
         case 0x2312:
             if (registers[1] > registers[2]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2313:
             if (registers[1] > registers[3]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2320:
             if (registers[2] > registers[0]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2321:
             if (registers[2] > registers[1]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2322:
-            pc++;
+            pc++;pc++;pc++;
             break;
         case 0x2323:
             if (registers[2] > registers[3]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2330:
             if (registers[3] > registers[0]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2331:
             if (registers[3] > registers[1]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2332:
             if (registers[3] > registers[2]) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2333:
-            pc++;
+            pc++;pc++;pc++;
             break;
         case 0x2400:
             if (registers[0] == 0) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2401:
             if (registers[1] == 0) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2402:
             if (registers[2] == 0) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
             break;
         case 0x2403:
             if (registers[3] == 0) {
                 pc = (int)stack[pc + 2];
             } else {
-                pc++;
+                pc++;pc++;pc++;
             }
-            return Update();
         default:
             return NotImplemented((short)op);
     }
+    
     return Update();
 }
 

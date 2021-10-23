@@ -1,12 +1,10 @@
 00E0 CLS              // TESTED
 00EE RET              // TESTED
 1NNN JMP NNN          // TESTED
-
-21XY JE VX, VY, 0xXY    // DONE
-22XY JNE VX, VY, 0xXY   // DONE
-23XY JGT VX, VY, 0xXY   // DONE
-240X JZ VX, 0xXY        // DONE
-
+21XY JE VX, $KK u8    // TESTED
+22XY JNE VX, $KK u8   // TESTED
+23XY JGT VX, $KK u8   // TESTED
+240X JZ VX, $KK u8    // TESTED
 300X PRNT X           // TESTED
 301X PRNT_CHAR X      // TESTED
 4NNN CALL NNN         // TESTED

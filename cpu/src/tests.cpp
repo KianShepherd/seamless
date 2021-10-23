@@ -162,10 +162,17 @@ unsigned long long Tests::jumpTests() {
     int passes = 0;
     std::cout << "    Running JUMP tests" << std::endl;
     passes += run_test("test_programs/jump1.se", 0);
+    passes += run_test("test_programs/je1.se", 1);
+    passes += run_test("test_programs/je2.se", 255);
+    passes += run_test("test_programs/jne1.se", 255);
+    passes += run_test("test_programs/jne2.se", 0);
+    passes += run_test("test_programs/jgt1.se", 255);
+    passes += run_test("test_programs/jgt2.se", 5);
+    passes += run_test("test_programs/jz1.se", 255);
+    passes += run_test("test_programs/jz2.se", 0);
+    std::cout << "        JUMP tests: " << passes << "/9" << std::endl;
 
-    std::cout << "        JUMP tests: " << passes << "/1" << std::endl;
-
-    return (passes == 1) ? 1 : 0;
+    return (passes == 9) ? 1 : 0;
 }
 
 unsigned long long Tests::skipTests() {

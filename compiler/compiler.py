@@ -19,20 +19,6 @@ for i in nums:
                 pc = "0" + pc
             ops["JMP " + i + j + k] = "4" + pc
             
-for i in registers:
-    for j in registers:
-        ops["JE " + i + ", " + j] = "21" + i + j
-
-for i in registers:
-    for j in registers:
-        ops["JNE " + i + ", " + j] = "22" + i + j
-
-for i in registers:
-    for j in registers:
-        ops["JGT " + i + ", " + j] = "23" + i + j
-
-for i in registers:
-    ops["JZ " + i] = "240" + i
 
 for i in registers:
     ops["PRNT " + i] = "300" + i
@@ -208,6 +194,29 @@ def handle_STORE(sasm_str):
     else:
         return ""
 
+def handle_JUMP(sasm_str):
+    split_str = sasm_str.split()
+    ret_str = "2"
+    first_reg = split_str[1][:-1]
+    second_reg = split_str[2][:-1]
+    if len(split_str) < 4:
+        jump_location = str(hex(int(split_str[2])))
+    else:
+        jump_location = str(hex(int(split_str[3])))
+    jump_location = jump_location[2:].upper()
+    while len(jump_location) < 2:
+        jump_location = "0" + jump_location
+    if split_str[0] == "JE":
+        ret_str = ret_str + "1" + first_reg + second_reg + str(jump_location)
+    elif split_str[0] == "JNE":
+        ret_str = ret_str + "2" + first_reg + second_reg + str(jump_location)
+    elif split_str[0] == "JGT":
+        ret_str = ret_str + "3" + first_reg + second_reg + str(jump_location)
+    elif split_str[0] == "JZ":
+        ret_str = ret_str + "40" + first_reg + str(jump_location)
+    else: 
+        return "";
+    return ret_str;
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
@@ -224,7 +233,7 @@ if __name__ == "__main__":
                 if line in ops.keys():
                     out = out + ops[line]
                 else:
-                    temp = handle_SET(line) + handle_STORE(line) + handle_LOAD(line)
+                    temp = handle_SET(line) + handle_STORE(line) + handle_LOAD(line) + handle_JUMP(line)
                     if len(temp) > 0:
                         out = out + temp
                     else:
