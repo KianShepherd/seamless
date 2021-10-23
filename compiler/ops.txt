@@ -26,16 +26,16 @@
 
 7X00 RND VX            // DONE
 8XY0 ADD VX, VY        // TESTED
-8XY1 OR VX, VY         // DONE
-8XY2 AND VX, VY        // DONE
-8XY3 XOR VX, VY        // DONE
+8XY1 OR VX, VY         // TESTED
+8XY2 AND VX, VY        // TESTED
+8XY3 XOR VX, VY        // TESTED
 8XY4 SUB VX, VY        // TESTED
 8XY5 MUL VX, VY        // TESTED
-8XY6 DIV VX, VY        // DONE
+8XY6 DIV VX, VY        // TESTED
 90X0 SKZ VX            // DONE
 90X1 SKNZ VX           // DONE
 91XY SKE VX, VY        // DONE
 92XY SKNE VX, VY       // DONE
 93XY SKGT VX, VY       // DONE
-AXY0 LD VX, VY         // DONE
+AXY0 LD VX, VY         // TESTED
 FFFX DBG VX            // TESTED

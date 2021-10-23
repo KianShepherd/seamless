@@ -18,10 +18,10 @@ unsigned long long Tests::run() {
 
 unsigned long long Tests::controlFlowTests() {
     int passes = 0;
-    std::cout << "Running Control Flow tests" << std::endl;
+    std::cout << "    Running Control Flow tests" << std::endl;
     passes += functionTests();
     passes += jumpTests();
-    std::cout << "Control Flow tests " << passes << "/2" << std::endl;
+    std::cout << "    Control Flow tests " << passes << "/2" << std::endl << std::endl;
     return (passes == 2) ? 1 : 0;
 }
 
@@ -47,7 +47,7 @@ unsigned long long Tests::mathTests() {
     passes += xorTest();
 
 
-    std::cout << "        Math tests: " << passes << "/6" << std::endl;
+    std::cout << "        Math tests: " << passes << "/6" << std::endl << std::endl;
 
     return (passes == 6) ? 1 : 0;
 }
@@ -130,7 +130,7 @@ unsigned long long Tests::xorTest() {
 
 unsigned long long Tests::setTests() {
     int passes = 0;
-    std::cout << "    Running Set tests" << std::endl;
+    std::cout << "        Running Set tests" << std::endl;
     passes += run_test("test_programs/set1.se", 276);
     passes += run_test("test_programs/set2.se", 2);
     passes += run_test("test_programs/set3.se", 65530);
@@ -139,9 +139,10 @@ unsigned long long Tests::setTests() {
     passes += run_test("test_programs/set6.se", 4294967300);
     passes += run_test("test_programs/set7.se", 18446744073709551613u);
     passes += run_test("test_programs/set8.se", 255);
-    std::cout << "        Set tests: " << passes << "/8" << std::endl;
+    passes += run_test("test_programs/load1.se", 255);
+    std::cout << "        Set tests: " << passes << "/9" << std::endl << std::endl;
 
-    return (passes == 8) ? 1 : 0;
+    return (passes == 9) ? 1 : 0;
 }
 
 unsigned long long Tests::jumpTests() {

@@ -1,4 +1,4 @@
-00E0 CLS             // WORKING
+00E0 CLS             // TESTED
 00EE RET             // TESTED
 
 1NNN JMP NNN         // TESTED
@@ -13,7 +13,6 @@
 302X PRNT_FLOAT X    // DONE
 
 4NNN CALL NNN        // TESTED
-
 5X00 SET VX, $KK u8  // TESTED
 5X01 SET VX, $KK u16 // TESTED
 5X02 SET VX, $KK u32 // TESTED
@@ -44,6 +43,5 @@
 92XY SKNE VX, VY    // DONE
 93XY SKGT VX, VY    // DONE
 
-AXY0 LD VX, VY      // DONE
-
-FFFX DBG VX         // WORKING
+AXY0 LD VX, VY      // TESTED
+FFFX DBG VX         // TESTED
