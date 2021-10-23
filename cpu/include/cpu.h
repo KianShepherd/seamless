@@ -11,9 +11,11 @@
 class CPU {
     public:
         void Dump();
-        CPU(const char* program, int program_size, bool debug);
+        CPU(const unsigned char* program, int program_size, bool debug);
         ~CPU();
         unsigned long long  Start();
+        void setRegister(int reg, unsigned long long value);
+        unsigned long long getRegister(int reg);
     private:
         unsigned long long  Ops0000(unsigned short op);
         unsigned long long  Ops1000(unsigned short op);

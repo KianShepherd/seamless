@@ -36,7 +36,7 @@ private:
     
     
 
-    static int dump(std::istream& ins, char* program_data );
+    static int dump(std::istream& ins, unsigned char* program_data );
 };
 
 unsigned char hex_char_to_int( char c );

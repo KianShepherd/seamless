@@ -40,9 +40,6 @@ for i in registers:
 for i in registers:
     ops["PRNT_CHAR " + i] = "301" + i
 
-for i in registers:
-    ops["PRNT_FLOAT " + i] = "302" + i
-
 for i in nums:
     for j in nums:
         for k in nums:

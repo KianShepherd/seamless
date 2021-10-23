@@ -2,7 +2,7 @@
 #include <string>
 #include "../include/cpu.h"
 
-CPU::CPU(const char* program, int program_size, bool debug) {
+CPU::CPU(const unsigned char* program, int program_size, bool debug) {
     pc = 0;
     debugging = debug;
     registers = new unsigned long long[MAX_REGISTERS];
@@ -17,7 +17,6 @@ CPU::CPU(const char* program, int program_size, bool debug) {
             stack[i] = 0;
         }
     }
-
 }
 
 CPU::~CPU() = default;
@@ -411,19 +410,6 @@ unsigned long long  CPU::Ops3000(unsigned short op) {
             return Update();
         case 0x3013:
             std::cout << (char)registers[3];
-            return Update();
-// print float
-        case 0x3020:
-            std::cout << (double)registers[0];
-            return Update();
-        case 0x3021:
-            std::cout << (double)registers[1];
-            return Update();
-        case 0x3022:
-            std::cout << (double)registers[2];
-            return Update();
-        case 0x3023:
-            std::cout << (double)registers[3];
             return Update();
         default:
             return NotImplemented((short)op);
@@ -1264,6 +1250,14 @@ unsigned long long CPU::OpsF000(unsigned short op) {
         default:
             return NotImplemented((short)op);
     }
+}
+
+unsigned long long CPU::getRegister(int reg) {
+    return registers[reg];
+}
+
+void CPU::setRegister(int reg, unsigned long long value) {
+    registers[reg] = value;
 }
 
 unsigned long long  CPU::Update() {

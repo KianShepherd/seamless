@@ -1,8 +1,9 @@
 #include <vector>
+#include <string.h>
 #include "../include/tests.h"
 
 Tests::Tests() {
-    auto program_data = new char[0];
+    auto program_data = new unsigned char[0];
     cpu = new CPU(program_data, 0, false);
 }
 
@@ -14,6 +15,7 @@ unsigned long long Tests::run() {
     passes += mathTests();
     std::cout << "ALL TESTS " << passes << "/3" << std::endl;
     run_test("test_programs/print.se", 9, true);
+
     return 0;
 }
 
@@ -208,7 +210,7 @@ void Tests::load_program(const std::string& file_name) {
     std::ifstream bin_file(file_name, std::ios::binary);
 
     int length;
-    char*  program_data = new char[200];
+    unsigned char*  program_data = new unsigned char[200];
     std::ostringstream ret;
     if (bin_file.is_open()) {
         length = dump(bin_file, program_data);
@@ -223,7 +225,7 @@ void Tests::load_program(const std::string& file_name) {
             //std::cout << (int)program_data[i] << std::endl << std::endl << std::endl;
             std::string temp_str = ret.str();
             temp_str = temp_str.substr(temp_str.length() - 2, temp_str.length());
-            program_data[i] = (long long)((unsigned char)string_to_vector(temp_str));
+            program_data[i] = (unsigned char)string_to_vector(temp_str);
             //std::cout << std::dec << (long long)((unsigned char)program_data[i]) << " " << (((unsigned char)program_data[i] > 255) ? "TRUE" : "FALSE") << std::endl << temp_str << std::endl << std::endl;
         }
         cpu = new CPU(program_data, length, false);
@@ -253,7 +255,7 @@ unsigned char hex_char_to_int(char c) {
     return result;
 }
 
-int Tests::dump(std::istream& ins, char* program_data) {
+int Tests::dump(std::istream& ins, unsigned char* program_data) {
     std::cout << std::setfill( '0' ) << std::hex << std::uppercase;
     int program_size = 0;
 
