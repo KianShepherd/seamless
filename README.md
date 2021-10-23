@@ -3,22 +3,33 @@
 ## What is it
 Seamless is a toolchain to go from code -> assembly -> opcodes -> cpu -> output. 
 
+CPU and Compiler versions 1.0 implement all the opcodes and have each been fully unit tested.
+
+<br>
+
 ### Seamless CPU v1.0
-The seamless cpu emulator is based off a modified version of the chip-8 instruction set, but made to have more registers and to allow for larger sized values (64-bits). 
+The seamless CPU emulator is based off a modified version of the Chip-8 instruction set, but with 4 64 bit registers. 
+
+<br>
 
 ### Seamless SASM Compiler v1.0
 The SASM compiler compiles SASM(Simple-Assembly) files into the opcodes that the CPU emulator will later use to run the program. 
+
+<br>
 
 ### Seamless Language
 Not yet implemented.
 The seamless language will be compiled into Simple-Assembly to be used later in the toolchain.
 
+<br>
 
 ## Assembly & OP Code Specification
 ### Legend
 * `VX or VY`  denotes the register index [0, 1, 2, 3]
 * `$KK uSize` denotes an unsigned value with max size denoted by the value of Size
 * `NNN` denotes a 3 nibble value in hex
+
+<br>
 
 ### Assembly & OP Codes
 * `0x00E0`: CLS (Close: exits the program)
