@@ -10,6 +10,61 @@ pub struct Token {
     matched_text: String,
 }
 
+pub struct TokenStack {
+    stack: Vec<Token>
+}
+
+impl TokenStack {
+    pub fn new() -> TokenStack {
+        TokenStack {
+            stack: vec![],
+        }
+    }
+
+    pub fn add(&mut self, token: Token) {
+        &self.stack.push(token);
+    }
+
+    pub fn pop(&mut self) -> Token {
+        if self.stack.len() <= 0{
+            panic!("No tokens are left on the stack")
+        }
+        
+        let token = Token::new(self.stack.get(0).unwrap().get_type(), self.stack.get(0).unwrap().get_text());
+        &self.stack.remove(0);
+
+        token
+    }
+
+    pub fn len(&self) -> usize {
+        self.stack.len()
+    }
+
+    pub fn get_stack(&self) -> &Vec<Token> {
+        &self.stack
+    }
+
+    pub fn pop_check(&mut self, comparison: &str) -> Token {
+        if self.stack.len() <= 0{
+            panic!("No tokens are left on the stack")
+        }
+        
+        let token = Token::new(self.stack.get(0).unwrap().get_type(), self.stack.get(0).unwrap().get_text());
+        &self.stack.remove(0);
+        if (token.get_type() != comparison) {
+            panic!("Unexpected token {} found.", token.get_type())
+        }
+
+        token
+    }
+
+    pub fn peek(&self) -> Token {
+        if self.stack.len() <= 0{
+            panic!("No tokens are left on the stack")
+        }
+        Token::new(self.stack.get(0).unwrap().get_type(), self.stack.get(0).unwrap().get_text())
+    }
+}
 
 impl Token {
     pub fn new(typ: String, tex: String) -> Token {

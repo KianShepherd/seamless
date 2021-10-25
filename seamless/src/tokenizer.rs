@@ -1,6 +1,7 @@
 use regex::Regex;
 use crate::token::TokenBuilder;
 use crate::token::Token;
+use crate::token::TokenStack;
 use std::fs;
 
 // Creates vector of TokenBuilders for each kind of token that is being looked for
@@ -29,12 +30,12 @@ fn regex_string_builder(tok_arr: std::vec::Vec<TokenBuilder>) -> String {
 
 // Pass in file name
 // Returns Vector of tokens found in file
-pub fn get_tokens(file_name: String) -> std::vec::Vec<Token> {
+pub fn get_tokens(file_name: String) -> TokenStack {
+    let mut token_stack = TokenStack::new();
     let builder_vector = create_token_array();
     let content = fs::read_to_string(file_name).expect("Unable to read file");
     let _re = Regex::new(&regex_string_builder(builder_vector)).unwrap();
     let mut re;
-    let mut final_token_vector = vec![];
 
     // Get all tokens from input file as separate Strings
     // then build them into final token vector
@@ -43,12 +44,12 @@ pub fn get_tokens(file_name: String) -> std::vec::Vec<Token> {
             re = Regex::new(&builder.get_regex()).unwrap();
             if re.is_match(&cap[0]) { // builder matches current capture
                 // create new Token and add it to the returning vector
-                final_token_vector.push(Token::new(builder.get_type(), (&cap[0]).to_string()));
+                token_stack.add(Token::new(builder.get_type(), (&cap[0]).to_string()));
                 // println!("{}", &cap[0]); // Debug Line
                 break; // in case text matches multiple builders eg. int and identifier
             }
         }
     }
 
-    final_token_vector
+    token_stack
 }

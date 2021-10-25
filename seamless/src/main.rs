@@ -24,7 +24,7 @@ fn main() {
     let tokens = &mut tokenizer::get_tokens(filename);
 
     // tokens debug
-    for tok in tokens.iter() {
+    for tok in tokens.get_stack().iter() {
         println!("{} : {}", tok.get_type(), tok.get_text());
     }
 
