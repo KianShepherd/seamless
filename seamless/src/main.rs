@@ -34,7 +34,7 @@ fn main() {
         let node = parser::parse_function(tokens);
         functions.push(node);
 
-        if (tokens.len() == 0){
+        if tokens.len() == 0 {
             break;
         }
     }

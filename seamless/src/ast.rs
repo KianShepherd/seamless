@@ -82,7 +82,8 @@ impl Function {
     }
 
     pub fn get_id(&self) -> String { String::from(&self.id.to_string()) }
-    pub fn add_statement(&mut self, statement: AstNode) { &self.body.push(statement); }
+    pub fn add_statement(&mut self, statement: AstNode) { let _ = &self.body.push(statement); }
+    pub fn get_statements(&self) -> &Vec<AstNode> { &self.body }
     pub fn to_string(&self) -> String {
         let mut out: String = "Function ".to_string() + &self.id.to_string() + &":\n".to_string();
         out = out + "    body:\n    ";
@@ -106,7 +107,8 @@ impl Statement {
     }
 
     pub fn get_type(&self) -> &String { &self.statement_type }
-    pub fn add_expression(&mut self, expr: &mut Vec<AstNode>) { &self.body.append(expr); }
+    pub fn add_expression(&mut self, expr: &mut Vec<AstNode>) { let _ = &self.body.append(expr); }
+    pub fn get_expressions(&self) -> &Vec<AstNode> { &self.body }
     pub fn to_string(&self) -> String {
         let mut out: String = "    Return ".to_string();
         for expr in &self.body {

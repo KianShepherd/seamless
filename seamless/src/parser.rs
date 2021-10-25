@@ -1,11 +1,10 @@
 use crate::ast;
 use crate::ast::AstNode;
-use crate::token::{Token, TokenStack};
+use crate::token::TokenStack;
 
 // <exp> ::= <int>
 pub fn parse_expression(tokens: &mut TokenStack) -> std::vec::Vec<AstNode>{
     let mut nodes = vec![];
-    tokens.pop();
     let tok = tokens.pop();
 
     let _type: &str = &tok.get_type();

@@ -22,7 +22,7 @@ impl TokenStack {
     }
 
     pub fn add(&mut self, token: Token) {
-        &self.stack.push(token);
+        let _ = &self.stack.push(token);
     }
 
     pub fn pop(&mut self) -> Token {
@@ -31,7 +31,7 @@ impl TokenStack {
         }
         
         let token = Token::new(self.stack.get(0).unwrap().get_type(), self.stack.get(0).unwrap().get_text());
-        &self.stack.remove(0);
+        let _ = &self.stack.remove(0);
 
         token
     }
@@ -50,8 +50,8 @@ impl TokenStack {
         }
         
         let token = Token::new(self.stack.get(0).unwrap().get_type(), self.stack.get(0).unwrap().get_text());
-        &self.stack.remove(0);
-        if (token.get_type() != comparison) {
+        let _ = &self.stack.remove(0);
+        if token.get_type() != comparison {
             panic!("Unexpected token {} found.", token.get_type())
         }
 
