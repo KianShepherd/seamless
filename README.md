@@ -19,6 +19,7 @@ The SASM compiler compiles SASM(Simple-Assembly) files into the opcodes that the
 
 ### Seamless Language
 In progress.
+
 The seamless language will be compiled into Simple-Assembly to be used later in the toolchain.
 
 <br>
