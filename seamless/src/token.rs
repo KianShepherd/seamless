@@ -58,11 +58,11 @@ impl TokenStack {
         token
     }
 
-    pub fn peek(&self) -> Token {
-        if self.stack.len() <= 0{
-            panic!("No tokens are left on the stack")
+    pub fn peek(&self, index: usize) -> Token {
+        if self.stack.len() <= index {
+            panic!("No tokens are left at that position.")
         }
-        Token::new(self.stack.get(0).unwrap().get_type(), self.stack.get(0).unwrap().get_text())
+        Token::new(self.stack.get(index).unwrap().get_type(), self.stack.get(index).unwrap().get_text())
     }
 }
 

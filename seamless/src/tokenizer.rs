@@ -17,6 +17,7 @@ fn create_token_array() -> std::vec::Vec<TokenBuilder> {
     tokens.push(TokenBuilder::new("return keyword".to_string(), "return[\n\t\r ]".to_string()));
     tokens.push(TokenBuilder::new("identifier".to_string(), "[a-zA-Z]\\w*".to_string()));
     tokens.push(TokenBuilder::new("integer literal".to_string(), "[0-9]+".to_string()));
+    tokens.push(TokenBuilder::new("unary plus".to_string(), "\\+".to_string()));
     tokens
 }
 

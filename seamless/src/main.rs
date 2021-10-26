@@ -1,8 +1,8 @@
-#![allow(dead_code)]
+
 
 extern crate regex;
 use std::env;
-use crate::ast::AstNode;
+use crate::ast::Function;
 
 mod tokenizer;
 mod token;
@@ -28,7 +28,7 @@ fn main() {
         println!("{} : {}", tok.get_type(), tok.get_text());
     }
 
-    let mut functions: Vec<AstNode> = vec![];
+    let mut functions: Vec<Function> = vec![];
 
     loop {
         let node = parser::parse_function(tokens);

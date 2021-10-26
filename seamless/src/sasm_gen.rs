@@ -1,92 +1,51 @@
 #![allow(unused_mut)]
-use crate::ast;
 use std::fs;
+use std::slice::Iter;
+use crate::ast::{Expression, Function, Statement};
 
-pub fn parse_type_of_expression(node: &Option<&ast::AstNode>, out: &mut String) {
-    match node {
-        Some(x) => {
-            match x.get_expression() {
-                Some(y) => {
-                    let string: &str = &y.get_type();
-                    match string {
-                        _ => out.push_str(&parse_expression(&node)),
-                    }
-                },
-                None => return,
-            }
-        },
-        None => return,
-    }
-}
-
-pub fn create_asm_text(tree: &mut std::slice::Iter<ast::AstNode>) -> String {
+pub fn create_asm_text(functions: &mut Iter<Function>) -> String {
     let mut out = String::new();
-    for function in tree {
-        out.push_str(&parse_function(Some(function)));
+    for function in functions {
+        out.push_str(&parse_function(function));
     }
 
     out
 }
 
-pub fn create_asm(tree: &mut std::slice::Iter<ast::AstNode>, outfile: & String) {
+pub fn create_asm(tree: &mut Iter<Function>, outfile: & String) {
     let mut out = create_asm_text(tree);
     fs::write(&outfile, &out).expect("Failed to write to file");
 }
 
 
-pub fn parse_expression(node: &Option<&ast::AstNode>) -> String {
+pub fn parse_expressions(expressions: &Vec<Expression>) -> String {
     let mut out = String::new();
-    match node {
-        Some(x) => {
-            match x.get_expression() {
-                Some(y) => {
-                    out.push_str("SET 0, ");
-                    out.push_str(&y.get_text());
-                    out.push_str("\n");
-                    out
-                },
-                None => out
-            }
-        },
-        None => out
+    for index in 0..expressions.len() {
+        let expr_type: &str = &expressions[index].get_type();
+        match expr_type {
+            "integer literal" => { out = out + &expressions[index].get_text(); }
+            _ => return "".to_string(),
+        }
+
     }
+    out
 }
 
-fn parse_statement(node: Option<&ast::AstNode>) -> String  {
+fn parse_statements(statements: &Vec<Statement>) -> String  {
     let mut out = String::new();
-    match node {
-        Some(x) => {
-            match x.get_statement() {
-                Some(statement) => {
-                    let expressions = statement.get_expressions();
-                    for expression in expressions.iter() {
-                        parse_type_of_expression(&Some(expression), &mut out)
-                    }
-                    out.push_str("RET\n");
-                    out
-                },
-                None => out
-            }
-        },
-        None => out
+    for statement in statements {
+        if statement.get_type() == "return keyword" {
+            out.push_str(&("SET 0, ".to_string() + &parse_expressions(statement.get_expressions()) + "\n"));
+            out.push_str("RET\n");
+        }
     }
+    out
 }
 
-pub fn parse_function(node: Option<&ast::AstNode>) -> String {
+
+pub fn parse_function(func: &Function) -> String {
     let mut out = String::new();
-    match node {
-        Some(x) => {
-            match x.get_function() {
-                Some(func) => {
-                    let statements = func.get_statements();
-                    for statement in statements.iter() {
-                        out.push_str(&parse_statement(Some(&statement)));
-                    }
-                    out
-                },
-                None => out
-            }
-        },
-        None => out
-    }
+    out.push_str(&parse_statements(func.get_statements()));
+
+    out
 }
